@@ -1,0 +1,3 @@
+ErrorDocument 404 'Foobar 404'
+
+Options -Indexes
