@@ -32,4 +32,5 @@ file for more info.
 ## TODO
 
 * use <https://github.com/tivie/php-htaccess-parser>? - Apache License
-* use <https://github.com/jaytaph/HTRouter>?  
+* use <https://github.com/jaytaph/HTRouter>?
+* use <http://pecl.php.net/package/htscanner>?
