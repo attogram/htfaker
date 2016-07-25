@@ -9,6 +9,11 @@
   "require-dev": {
     "tivie/htaccess-parser": "dev-master"
   },
+  "autoload": {
+      "psr-4": {
+          "Attogram\\htfaker\\": "htfaker"
+      }
+  },
   "authors": [
     {
       "name": "htfaker Developers",
