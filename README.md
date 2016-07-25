@@ -27,3 +27,9 @@ htfaker is dual licensed under
 Read the
 [LICENSE.md](https://github.com/attogram/htfaker/blob/master/LICENSE.md)
 file for more info.
+
+
+## TODO
+
+* use <https://github.com/tivie/php-htaccess-parser>? - Apache License
+* use <https://github.com/jaytaph/HTRouter>?  
