@@ -1,0 +1,19 @@
+{
+  "name": "attogram/htfaker",
+  "description": ".htaccess emulator for the PHP built-in web server",
+  "homepage": "https://github.com/attogram/htfaker",
+  "license": "(MIT or GPL-3.0+)",
+  "require": {
+    "php": ">=5.4.0 || ^7.0"
+  },
+  "authors": [
+    {
+      "name": "htfaker Developers",
+      "homepage": "https://github.com/attogram/htfaker"
+    }
+  ],
+  "keywords": [
+    "htfaker",
+    "htaccess"
+  ]
+}
