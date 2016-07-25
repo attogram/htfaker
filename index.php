@@ -22,4 +22,4 @@ echo '<pre>htfaker ', htfaker::HTFAKER_VERSION,
     $cr, '$testFile:', $cr, print_r($testFile, true),
     $cr, '$errorDocument: ', print_r($errorDocument, true),
     $cr, '$options: ', print_r($options, true),
-    $cr, 'modRewrite: ', print_r($modRewrite, true);
+    $cr, '$modRewrite: ', print_r($modRewrite, true);
