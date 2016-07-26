@@ -38,7 +38,6 @@ class Htfaker
         $this->htaccessFiles[self::HTACCESS_FILE] = null;
         $this->htaccessFiles['../'.self::HTACCESS_FILE] = null;
         $this->htaccessFiles['../../'.self::HTACCESS_FILE] = null;
-        $this->htaccessFiles['TODO: travel up to WEBROOT, get each '.self::HTACCESS_FILE.' file']  = null;
         $this->debug('setHtaccessFiles: '.print_r($this->htaccessFiles, true));
     }
 
@@ -50,11 +49,11 @@ class Htfaker
     {
         foreach (array_keys($this->htaccessFiles) as $file) {
             if (!is_readable($file) || !is_file($file)) {
-                $this->debug('parseHtaccessFiles: NOT FILE/NOT READABLE: '.$file);
+                $this->debug('parseHtaccessFiles: NOT FOUND: '.$file);
                 continue;
             }
             $this->htaccessFiles[$file] = $this->getParser()->parse(new \SplFileObject($file));
-            $this->debug('parseHtaccessFiles: parsed OK: '.$file);
+            $this->debug('parseHtaccessFiles: OK: '.$file);
         }
     }
 
@@ -64,7 +63,13 @@ class Htfaker
      */
     public function applyHtaccess()
     {
-        //
+        foreach ($this->htaccessFiles as $file => $contents) {
+            if (!is_object($contents)) {
+                continue;
+            }
+            $this->debug('applyHtaccess: '.$file);
+            $this->debug((string)$contents);
+        }
     }
 
     /**
@@ -90,7 +95,8 @@ class Htfaker
         if (!$this->debug) {
             return;
         }
-        echo '<pre style="background-color:#ffffaa;margin:0;">DEBUG: '
-            .print_r($message, true).'</pre>';
+        echo '<pre style="background-color:#ffffaa;margin:0;">'
+            .print_r($message, true)
+            .'</pre>';
     }
 }

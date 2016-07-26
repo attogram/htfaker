@@ -3,9 +3,8 @@
 
 require __DIR__.'/../../../../vendor/autoload.php';
 
-$htfaker = new \Attogram\htfaker\htfaker();
+$htfaker = new \Attogram\Htfaker\Htfaker();
 
 echo '<html><head><title>htfaker example alpha/beta/gamma</title></head><body><pre>',
-  '<strong>htfaker example alpha/beta/gamma</strong><br /><br />',
-  print_r($htfaker, true),
+  '<strong>htfaker example alpha/beta/gamma</strong>',
   '</pre></body></html>';
