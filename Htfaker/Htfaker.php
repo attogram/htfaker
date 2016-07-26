@@ -98,10 +98,9 @@ class Htfaker
     {
         foreach ($this->htaccessFiles as $file => $contents) {
             if (!is_object($contents)) {
-                //$this->debug('applyHtaccess: NOT FOUND: '.$file);
+                $this->debug('applyHtaccess: ERROR: '.$file);
                 continue;
             }
-            $this->debug();
             $this->debug(
                 'applyHtaccess: '.$file.'<br />'
                 .'<span style="color:#999999;font-size:small;">'
