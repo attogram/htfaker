@@ -68,7 +68,7 @@ class Htfaker
                 continue;
             }
             $this->debug('applyHtaccess: '.$file);
-            $this->debug((string)$contents);
+            $this->debug('<br />'.(string)$contents.'<br />');
         }
     }
 
@@ -82,7 +82,10 @@ class Htfaker
         if (is_object($this->parser)) {
             return $this->parser;
         }
-        return $this->parser = new Parser();
+        $this->parser = new Parser();
+        $this->parser->ignoreWhiteLines(true);
+        $this->parser->ignoreComments(true);
+        return $this->parser;
     }
 
     /**
