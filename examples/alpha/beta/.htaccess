@@ -1,0 +1,5 @@
+# htfaker - example .htaccess
+
+ErrorDocument 404 'Resource Not Found: examples/alpha/beta'
+
+Options -Indexes
