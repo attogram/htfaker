@@ -10,7 +10,7 @@ class Htfaker
     const HTFAKER_VERSION = '0.0.1';
     const HTACCESS_FILE = '.htaccess';
 
-    public $debug = true;
+    public $debug;
     public $htaccessFiles;
     public $parser;
 
@@ -18,11 +18,11 @@ class Htfaker
      * start htfaker
      * @param bool $debug (optional)
      */
-    public function __construct($debug = true)
+    public function __construct($debug = false)
     {
         $this->debug = $debug;
         $this->debug('HTFAKER_VERSION: v'.self::HTFAKER_VERSION);
-        $this->debug('HTACCESS_FILE: '.self::HTACCESS_FILE);
+        //$this->debug('HTACCESS_FILE: '.self::HTACCESS_FILE);
         $this->setHtaccessFiles();
         $this->parseHtaccessFiles();
         $this->applyHtaccess();
@@ -35,7 +35,7 @@ class Htfaker
      */
     public function setHtaccessFiles()
     {
-        $this->htaccessFiles[self::HTACCESS_FILE] = null;
+        //$this->htaccessFiles[self::HTACCESS_FILE] = null;
 
         $currentDirectory = dirname(realpath($_SERVER['SCRIPT_FILENAME']));
         $documentRoot = realpath($_SERVER['DOCUMENT_ROOT']);
@@ -51,12 +51,11 @@ class Htfaker
         if ($levelsCount == 0) {
             return;
         }
-        $levelsCount = $levelsCount - 1;
 
         $rel = '';
         for ($x = 0; $x < $levelsCount; $x++ ) {
+            $this->htaccessFiles[realpath($rel).DIRECTORY_SEPARATOR.self::HTACCESS_FILE] = null;
             $rel .= '../';
-            $this->htaccessFiles[$rel.self::HTACCESS_FILE] = null;
         }
 
         $this->debug('setHtaccessFiles: '.print_r($this->htaccessFiles, true));
@@ -70,11 +69,11 @@ class Htfaker
     {
         foreach (array_keys($this->htaccessFiles) as $file) {
             if (!is_readable($file) || !is_file($file)) {
-                $this->debug('parseHtaccessFiles: NOT FOUND: '.$file);
+                //$this->debug('parseHtaccessFiles: NOT FOUND: '.$file);
                 continue;
             }
             $this->htaccessFiles[$file] = $this->getParser()->parse(new \SplFileObject($file));
-            $this->debug('parseHtaccessFiles: OK: '.$file);
+            //$this->debug('parseHtaccessFiles: OK: '.$file);
         }
     }
 
@@ -86,10 +85,11 @@ class Htfaker
     {
         foreach ($this->htaccessFiles as $file => $contents) {
             if (!is_object($contents)) {
+                $this->debug('applyHtaccess: NOT FOUND: '.$file);
                 continue;
             }
             $this->debug('applyHtaccess: '.$file);
-            $this->debug('<br />'.(string)$contents.'<br />');
+            $this->debug((string)$contents.'<br />');
         }
     }
 

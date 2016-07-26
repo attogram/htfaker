@@ -5,7 +5,7 @@ $baseDir = dirname('../../');
 
 require $baseDir.'/vendor/autoload.php';
 
-$htfaker = new \Attogram\Htfaker\Htfaker();
+$htfaker = new \Attogram\Htfaker\Htfaker(true);
 
 echo '<a href="'.$baseDir.'">htfaker</a> / ',
     '<strong>examples</strong> / ',
