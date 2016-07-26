@@ -35,7 +35,7 @@ class Htfaker
      */
     public function setHtaccessFiles()
     {
-        //$this->htaccessFiles[self::HTACCESS_FILE] = null;
+        $this->htaccessFiles[realpath('.').DIRECTORY_SEPARATOR.self::HTACCESS_FILE] = null;
 
         $currentDirectory = dirname(realpath($_SERVER['SCRIPT_FILENAME']));
         $documentRoot = realpath($_SERVER['DOCUMENT_ROOT']);
@@ -43,12 +43,14 @@ class Htfaker
         $this->debug('documentRoot: '.$documentRoot);
 
         if ($currentDirectory == $documentRoot) {
+            $this->debug('setHtaccessFiles: '.print_r($this->htaccessFiles, true));
             return;
         }
 
         $levels = str_replace($documentRoot, '', $currentDirectory);
         $levelsCount = sizeof(explode(DIRECTORY_SEPARATOR, $levels));
         if ($levelsCount == 0) {
+            $this->debug('setHtaccessFiles: '.print_r($this->htaccessFiles, true));
             return;
         }
 
