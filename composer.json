@@ -7,8 +7,7 @@
     "php": ">=5.4.0 || ^7.0"
   },
   "require-dev": {
-    "tivie/htaccess-parser": "dev-master",
-    "symfony/http-kernel": "^3.1.2"
+    "tivie/htaccess-parser": "dev-master"
   },
   "autoload": {
       "psr-4": {
