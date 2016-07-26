@@ -20,11 +20,24 @@ class htfaker
     public function __construct($debug = true)
     {
         $this->debug = $debug;
-        $this->debug('htfaker: __DIR__: '.__DIR__);
-        $this->debug('htfaker: DOCUMENT_ROOT: '.$_SERVER['DOCUMENT_ROOT']);
+        $this->getHtaccessFiles();
+        $this->parseHtaccessFiles();
+    }
 
-        $this->htaccessFiles[] = __DIR__.DIRECTORY_SEPARATOR.'.htaccess';
-        $this->htaccessFiles[] = 'TODO: travel up to WEBROOT, get each .htaccess file';
+    public function getHtaccessFiles()
+    {
+        $this->htaccessFiles['.htaccess'] = '';
+        $this->htaccessFiles['TODO: travel up to WEBROOT, get each .htaccess file']  = '';
+    }
+
+    public function parseHtaccessFiles()
+    {
+        foreach (array_keys($this->htaccessFiles) as $file) {
+            if (!is_readable($file) || !is_file($file)) {
+                continue;
+            }
+            $this->htaccessFiles[$file] = $this->getParser()->parse(new \SplFileObject($file));
+        }
     }
 
     /**
