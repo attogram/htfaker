@@ -1,8 +1,14 @@
 <?php
-// htfaker - example
+// htfaker - examples/alpha/beta/
 
-require __DIR__.'/../../../vendor/autoload.php';
+$baseDir = dirname('../../../../');
+
+require $baseDir.'/vendor/autoload.php';
 
 $htfaker = new \Attogram\Htfaker\Htfaker();
 
-echo 'htfaker example alpha/beta';
+echo '<a href="'.$baseDir.'">htfaker</a>: ',
+    '<a href="'.$baseDir.'/examples/">examples</a>/',
+    '<a href="'.$baseDir.'/examples/alpha/">alpha</a>/',
+    '<strong>beta</strong>/',
+    '<a href="'.$baseDir.'/examples/alpha/beta/gamma/">gamma</a>/';
