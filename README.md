@@ -5,15 +5,22 @@ is a PHP library that emulates
 [Apache .htaccess](https://httpd.apache.org/docs/current/howto/htaccess.html)
 functionality.
 
-It is intended for use with the
+It is intended to be run as a router script for the
 [PHP built-in web server](http://php.net/manual/en/features.commandline.webserver.php).
 
-It is intended for use in development environments only.
+## Usage
+
+Example usage:
+
+``php -S localhost:8080 router.php``
+
+then open [http://localhost:8080/](http://localhost:8080/) in your web browser.
 
 ## Status
 
 htfaker is in the planning stage.
-There is currently no working code.
+
+There is currently some framework code, but no .htaccess functionality yet.
 
 If you're interested in making a working library,
 please fork and contribute!
