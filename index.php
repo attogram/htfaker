@@ -20,7 +20,13 @@ h2 { font-size: 20px; padding:0; margin:0; font-weight:normal; }
   <a href="https://httpd.apache.org/docs/current/howto/htaccess.html">Apache .htaccess</a>
   functionality
 </h2>
+<?php
 
+require 'vendor/autoload.php';
+
+$htfaker = new \Attogram\Htfaker\Htfaker(true);
+
+?>
 <p>
   . / <a href="examples/">examples</a>
   / <a href="examples/alpha/">alpha</a>
