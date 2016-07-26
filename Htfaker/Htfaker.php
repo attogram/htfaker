@@ -32,7 +32,7 @@ class Htfaker
     {
         $this->setHtaccessFiles();
         if (!$this->htaccessFiles) {
-            $this->debug('No '.self::HTACCESS_FILE.' files found. returning false.');
+            $this->debug('No '.self::HTACCESS_FILE.' files found. RETURN FALSE');
             return false; // send request back to server
         }
         $this->debug(
@@ -41,7 +41,7 @@ class Htfaker
         );
         $this->parseHtaccessFiles();
         $this->applyHtaccess();
-        $this->debug('end. IN DEV: returning false.');
+        $this->debug('End. IN DEV: RETURN FALSE');
         return false; // send request back to server
     }
 

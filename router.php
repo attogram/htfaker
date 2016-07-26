@@ -1,5 +1,5 @@
 <?php
-// htfaker - router.php v0.0.1
+// htfaker - router.php
 
 $debug = true;
 
