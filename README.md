@@ -18,9 +18,15 @@ then open [http://localhost:8080/](http://localhost:8080/) in your web browser.
 
 ## Status
 
-htfaker is in the planning stage.
+htfaker is in the planning stage. There is currently very little functionality.
 
-There is currently some framework code, but no .htaccess functionality yet.
+| Directive         | Status |
+| ----------------  | ------ |
+| FallbackResource  | 0%     |
+| ErrorDocument 404 | 0%     |
+| DirectoryIndex    | 0%     |
+| Options -Indexes  | 0%     |
+| Options +Indexes  | 0%     |
 
 If you're interested in making a working library,
 please fork and contribute!
