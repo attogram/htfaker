@@ -12,6 +12,7 @@ class Htfaker
     public $debug;
     public $htaccessFiles;
     public $parser;
+    public $apply;
 
     /**
      * start htfaker
@@ -35,10 +36,10 @@ class Htfaker
             $this->debug('No '.self::HTACCESS_FILE.' files found. RETURN FALSE');
             return false; // send request back to server
         }
-        $this->debug(
-            'htaccessFiles: '.count($this->htaccessFiles)
+        //$this->debug(
+            //'htaccessFiles: '.count($this->htaccessFiles)
             //.'<br />'.implode('<br />', array_keys($this->htaccessFiles))
-        );
+        //);
         $this->parseHtaccessFiles();
         $this->applyHtaccess();
         $this->debug('End. IN DEV: RETURN FALSE');
@@ -101,12 +102,30 @@ class Htfaker
                 $this->debug('applyHtaccess: ERROR: '.$file);
                 continue;
             }
-            $this->debug(
-                'applyHtaccess: '.$file.'<br />'
-                .'<span style="color:#999999;font-size:small;">'
-                .(string)$contents.'</span>'
-            );
+            $this->debug('applyHtaccess: '.$file);
+
+            if ($options = $contents->search('Options')) {
+                $this->apply['Options'][] = (string)$options;
+                //$this->debug('- Options: '.$options);
+            }
+            if ($fallbackResource = $contents->search('FallbackResource')) {
+                $this->apply['FallbackResource'][] = (string)$fallbackResource;
+                //$this->debug('- FallbackResource: '.$fallbackResource);
+            }
+            if ($errorDocument = $contents->search('ErrorDocument')) {
+                $this->apply['ErrorDocument'][] = (string)$errorDocument;
+                //$this->debug('- ErrorDocument: '.$errorDocument);
+            }
+            if ($directoryIndex = $contents->search('DirectoryIndex')) {
+                $this->apply['DirectoryIndex'][] = (string)$directoryIndex;
+                //$this->debug('- DirectoryIndex: '.$directoryIndex);
+            }
+            if ($modRewrite = $contents->search('modRewrite')) {
+                $this->apply['modRewrite'][] = (string)$modRewrite;
+                //$this->debug('- modRewrite: '.$modRewrite);
+            }
         }
+        $this->debug('applyHtaccess: apply: '.print_r($this->apply, true));
     }
 
     /**
