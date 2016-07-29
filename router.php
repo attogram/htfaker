@@ -14,6 +14,6 @@ $htfaker = new \Attogram\Htfaker\Htfaker(
 
 // "If this script returns FALSE, then the requested resource is returned as-is.
 // Otherwise the script's output is returned to the browser."
-if( !$htfaker->run() ) {
+if (!$htfaker->run()) {
     return false;
 }
