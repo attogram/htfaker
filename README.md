@@ -9,13 +9,14 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/798587683ca54661a8fb5df5ed850745)](https://www.codacy.com/app/attogram-project/htfaker?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=attogram/htfaker&amp;utm_campaign=Badge_Grade)
 [`[CHANGELOG]`](https://github.com/attogram/htfaker/blob/master/CHANGELOG.md)
 
-[htfaker](https://github.com/attogram/htfaker)
-is a PHP library that emulates
+[htfaker](https://github.com/attogram/htfaker) is a router script that emulates
 [Apache .htaccess](https://httpd.apache.org/docs/current/howto/htaccess.html)
-functionality.
-
-It is intended to be run as a router script for the
+functionality for the
 [PHP built-in web server](http://php.net/manual/en/features.commandline.webserver.php).
+
+## Install
+
+``composer require attogram/htfaker``
 
 ## Usage
 
@@ -29,13 +30,40 @@ then open [http://localhost:8080/](http://localhost:8080/) in your web browser.
 
 htfaker is in the planning stage. There is currently very little functionality.
 
-| Directive         | Status |
-| ----------------  | ------ |
-| FallbackResource  | 0%     |
-| ErrorDocument 404 | 0%     |
-| DirectoryIndex    | 0%     |
-| Options -Indexes  | 0%     |
-| Options +Indexes  | 0%     |
+[*.htaccess Directive*](http://httpd.apache.org/docs/trunk/mod/core.html#allowoverride) | *status*
+----- | -----
+[FallbackResource](https://httpd.apache.org/docs/trunk/mod/mod_dir.html#fallbackresource) | 0%
+[DirectoryIndex](https://httpd.apache.org/docs/trunk/mod/mod_dir.html#directoryindex) | 0%
+[Options](http://httpd.apache.org/docs/trunk/mod/core.html#options) -Indexes | 0%     
+Options +Indexes | 0%     
+[ErrorDocument](http://httpd.apache.org/docs/trunk/mod/core.html#errordocument) 400 (Bad Request) | 0%
+ErrorDocument 401 (Unauthorized) | 0%
+ErrorDocument 402 (Payment Required) | 0%
+ErrorDocument 403 (Forbidden) | 0%
+ErrorDocument 404 (Not Found) | 0%
+ErrorDocument 500 (Internal Server Error) | 0%
+[Order](http://httpd.apache.org/docs/trunk/mod/mod_access_compat.html#order) | 0%
+[Allow](http://httpd.apache.org/docs/trunk/mod/mod_access_compat.html#allow) | 0%
+[Deny](http://httpd.apache.org/docs/trunk/mod/mod_access_compat.html#deny) | 0%
+[ForceType](http://httpd.apache.org/docs/trunk/mod/core.html#forcetype) | 0%
+[Redirect](http://httpd.apache.org/docs/trunk/mod/mod_alias.html#redirect) | 0%
+[RedirectPermanent](http://httpd.apache.org/docs/trunk/mod/mod_alias.html#redirectpermanent) | 0%
+[RedirectTemp](http://httpd.apache.org/docs/trunk/mod/mod_alias.html#redirecttemp) | 0%
+[RedirectMatch](http://httpd.apache.org/docs/trunk/mod/mod_alias.html#redirectmatch) | 0%
+[RewriteEngine](http://httpd.apache.org/docs/trunk/mod/mod_rewrite.html#rewriteengine) | 0%
+[RewriteOptions](http://httpd.apache.org/docs/trunk/mod/mod_rewrite.html#rewriteoptions) | 0%
+[RewriteBase](http://httpd.apache.org/docs/trunk/mod/mod_rewrite.html#rewritebase) | 0%
+[RewriteCond](http://httpd.apache.org/docs/trunk/mod/mod_rewrite.html#rewritecond) | 0%
+[RewriteRule](http://httpd.apache.org/docs/trunk/mod/mod_rewrite.html#rewriterule) | 0%
+
+*standards* | *status*
+----------- | --------
+[PSR-1 (Coding Standard)](http://www.php-fig.org/psr/psr-1/) | ?
+[PSR-2 (Coding Style)](http://www.php-fig.org/psr/psr-2/) | ?
+[PSR-3 (Logger Interface)](http://www.php-fig.org/psr/psr-3/) | 0%
+[PSR-4 (Autoloading)](http://www.php-fig.org/psr/psr-4/) | ?
+[PSR-5 (PHPDoc)](https://github.com/phpDocumentor/fig-standards/blob/master/proposed/phpdoc.md) | ?
+[PSR-7 (HTTP Message)](http://www.php-fig.org/psr/psr-4/) | 0%
 
 If you're interested in making a working library,
 please fork and contribute!
