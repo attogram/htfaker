@@ -8,8 +8,6 @@
 [![Issue Count](https://codeclimate.com/github/attogram/htfaker/badges/issue_count.svg)](https://codeclimate.com/github/attogram/htfaker)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/798587683ca54661a8fb5df5ed850745)](https://www.codacy.com/app/attogram-project/htfaker?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=attogram/htfaker&amp;utm_campaign=Badge_Grade)
 [`[CHANGELOG]`](https://github.com/attogram/htfaker/blob/master/CHANGELOG.md)
-[`[TODO]`](https://github.com/attogram/htfaker/blob/master/TODO.md)
-
 
 [htfaker](https://github.com/attogram/htfaker)
 is a PHP library that emulates
