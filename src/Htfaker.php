@@ -13,6 +13,13 @@ class Htfaker
     public $htaccessFiles;
     public $parser;
     public $apply;
+    public $directives = array(
+      'Options',
+      'FallbackResource',
+      'ErrorDocument',
+      'DirectoryIndex',
+      'modRewrite'
+    );
 
     /**
      * start htfaker
@@ -103,26 +110,10 @@ class Htfaker
                 continue;
             }
             $this->debug('applyHtaccess: '.$file);
-
-            if ($options = $contents->search('Options')) {
-                $this->apply['Options'][] = (string)$options;
-                //$this->debug('- Options: '.$options);
-            }
-            if ($fallbackResource = $contents->search('FallbackResource')) {
-                $this->apply['FallbackResource'][] = (string)$fallbackResource;
-                //$this->debug('- FallbackResource: '.$fallbackResource);
-            }
-            if ($errorDocument = $contents->search('ErrorDocument')) {
-                $this->apply['ErrorDocument'][] = (string)$errorDocument;
-                //$this->debug('- ErrorDocument: '.$errorDocument);
-            }
-            if ($directoryIndex = $contents->search('DirectoryIndex')) {
-                $this->apply['DirectoryIndex'][] = (string)$directoryIndex;
-                //$this->debug('- DirectoryIndex: '.$directoryIndex);
-            }
-            if ($modRewrite = $contents->search('modRewrite')) {
-                $this->apply['modRewrite'][] = (string)$modRewrite;
-                //$this->debug('- modRewrite: '.$modRewrite);
+            foreach ($this->directives as $directive) {
+                if ($result = $contents->search($directive)) {
+                    $this->apply[$directive][] = (string)$result;
+                }
             }
         }
         $this->debug('applyHtaccess: apply: '.print_r($this->apply, true));

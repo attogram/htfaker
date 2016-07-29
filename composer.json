@@ -1,12 +1,11 @@
 {
   "name": "attogram/htfaker",
   "description": "htfaker emulates Apache .htaccess functionality for the PHP built-in web server",
+  "type": "library",
   "homepage": "https://github.com/attogram/htfaker",
   "license": "(MIT or GPL-3.0+)",
   "require": {
-    "php": ">=5.4.0 || ^7.0"
-  },
-  "require-dev": {
+    "php": ">=5.4.0 || ^7.0",
     "tivie/htaccess-parser": "dev-master",
     "symfony/http-foundation": "~3.1.2"
   },

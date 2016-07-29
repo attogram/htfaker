@@ -1,10 +1,8 @@
 <?php
 // htfaker - router.php
 
-$debug = true;
-
 require 'vendor/autoload.php';
 
-$htfaker = new \Attogram\Htfaker\Htfaker($debug);
+$htfaker = new \Attogram\Htfaker\Htfaker(true);
 
 return $htfaker->run();

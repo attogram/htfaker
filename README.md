@@ -93,7 +93,7 @@ Options +Indexes | 0%
 [PSR-1 Basic Coding Standard](http://www.php-fig.org/psr/psr-1/) | ?
 [PSR-2 Coding Style Guide](http://www.php-fig.org/psr/psr-2/) | ?
 [PSR-3 Logger Interface](http://www.php-fig.org/psr/psr-3/) | 0%
-[PSR-4 Autoloading](http://www.php-fig.org/psr/psr-4/) | ?
+[PSR-4 Autoloading](http://www.php-fig.org/psr/psr-4/) | 50%
 [PSR-5 PHPDoc](https://github.com/phpDocumentor/fig-standards/blob/master/proposed/phpdoc.md) | ?
 [PSR-7 HTTP message interfaces](http://www.php-fig.org/psr/psr-7/) | 0%
 [Stack HttpKernelInterface](http://stackphp.com/) | 0%

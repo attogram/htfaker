@@ -21,11 +21,15 @@ h2 { font-size: 20px; padding:0; margin:0; font-weight:normal; }
   functionality
 </h2>
 <p>
-  . / <a href="examples/">examples</a>
-  / <a href="examples/alpha/">alpha</a>
-  / <a href="examples/alpha/beta/">beta</a>
-  / <a href="examples/alpha/beta/gamma/">gamma</a>
-  /
+webtests:
+<ul>
+  <li><a href="webtests/control-html/">control-html</a> - html index page with no .htaccess</li>
+  <li><a href="webtests/control-php/">control-php</a>  - php index page with no .htaccess</li>
+  <li><a href="webtests/ErrorDocument-404/non.html">ErrorDocument-404</a></li>
+  <li><a href="webtests/DirectoryIndex/">DirectoryIndex</a></li>
+  <li><a href="webtests/DirectoryIndex/2/">DirectoryIndex/2</a></li>
+  <li><a href=""></a></li>
+</ul>
 </p>
 <pre>_SERVER: <?php print_r($_SERVER); ?></pre>
 
