@@ -16,9 +16,11 @@ h2 { font-size: 20px; padding:0; margin:0; font-weight:normal; }
 <body>
 <h1>htfaker</h1>
 <h2>
-  <a href="https://github.com/attogram/htfaker">htfaker</a> emulates
+  <a href="https://github.com/attogram/htfaker">htfaker</a>
+  is a router script that emulates
   <a href="https://httpd.apache.org/docs/current/howto/htaccess.html">Apache .htaccess</a>
-  functionality
+  functionality for the
+  <a href="http://php.net/manual/en/features.commandline.webserver.php">PHP built-in web server</a>
 </h2>
 <p>
 webtests:
@@ -31,7 +33,6 @@ webtests:
   <li><a href=""></a></li>
 </ul>
 </p>
-<pre>_SERVER: <?php print_r($_SERVER); ?></pre>
 
 <a href="https://github.com/attogram/htfaker"><img style="position:absolute;top:0;right:0;border:0;"
 src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67"

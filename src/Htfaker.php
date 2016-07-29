@@ -9,6 +9,7 @@ class Htfaker
     const HTFAKER_VERSION = '0.0.1';
     const HTACCESS_FILE = '.htaccess';
 
+    public $request;
     public $debug;
     public $htaccessFiles;
     public $parser;
@@ -17,18 +18,28 @@ class Htfaker
       'Options',
       'FallbackResource',
       'ErrorDocument',
-      'DirectoryIndex',
-      'modRewrite'
+      'DirectoryIndex'
     );
 
     /**
      * start htfaker
-     * @param  bool $debug (optional) Debug messages on/off
+     * @param obj $request \Symfony\Component\HttpFoundation\Request object
+     * @param bool $debug (optional) Debug messages on/off
      */
-    public function __construct($debug = false)
+    public function __construct($request, $debug = false)
     {
+        $this->request = $request;
         $this->debug = $debug;
         $this->debug('htfaker v'.self::HTFAKER_VERSION);
+        //$this->debug('getScriptName: '.$this->request->getScriptName());
+        //$this->debug('getPathInfo: '.$this->request->getPathInfo());
+        //$this->debug('getBasePath: '.$this->request->getBasePath());
+        //$this->debug('getBaseUrl: '.$this->request->getBaseUrl());
+        //$this->debug('getRequestUri: '.$this->request->getRequestUri());
+        //$this->debug('getSchemeAndHttpHost: '.$this->request->getSchemeAndHttpHost());
+        //$this->debug('getUri: '.$this->request->getUri());
+        //getUriForPath($path)
+        //getRelativeUriForPath($string)
     }
 
     /**
@@ -39,17 +50,14 @@ class Htfaker
     public function run()
     {
         $this->setHtaccessFiles();
+        //$this->debug('# htaccessFiles: '.count($this->htaccessFiles));
         if (!$this->htaccessFiles) {
-            $this->debug('No '.self::HTACCESS_FILE.' files found. RETURN FALSE');
+            $this->debug('return false');
             return false; // send request back to server
         }
-        //$this->debug(
-            //'htaccessFiles: '.count($this->htaccessFiles)
-            //.'<br />'.implode('<br />', array_keys($this->htaccessFiles))
-        //);
         $this->parseHtaccessFiles();
         $this->applyHtaccess();
-        $this->debug('End. IN DEV: RETURN FALSE');
+        $this->debug('IN DEV. return false');
         return false; // send request back to server
     }
 
@@ -60,28 +68,32 @@ class Htfaker
      */
     public function setHtaccessFiles()
     {
-        $currentDirectory = dirname(realpath($_SERVER['SCRIPT_FILENAME']));
+        $documentRoot = $this->request->server->get('DOCUMENT_ROOT');
+        //$this->debug('documentRoot    : '.$documentRoot);
+        $currentDirectory = dirname($this->request->server->get('SCRIPT_FILENAME'));
+        //$this->debug('currentDirectory: '.$currentDirectory);
         $file = $currentDirectory.DIRECTORY_SEPARATOR.self::HTACCESS_FILE;
         if (is_file($file) && is_readable($file)) {
             $this->htaccessFiles[$file] = true;
+            $this->debug('LOADING: '.$file);
+        } else {
+            $this->debug('missing: '.$file);
         }
-        $documentRoot = realpath($_SERVER['DOCUMENT_ROOT']);
         if ($currentDirectory == $documentRoot) {
             return;
         }
         $levels = str_replace($documentRoot, '', $currentDirectory);
-        $levelsCount = sizeof(explode(DIRECTORY_SEPARATOR, $levels));
-        if ($levelsCount == 0) {
-            return;
-        }
-        $rel = '';
+        $levelsCount = sizeof(explode(DIRECTORY_SEPARATOR, $levels)) - 2;
+        $rel = '..'.DIRECTORY_SEPARATOR;
         for ($x = 0; $x <= $levelsCount; $x++ ) {
-            $file = realpath($currentDirectory.$rel)
-                .DIRECTORY_SEPARATOR.self::HTACCESS_FILE;
+            $rel .= DIRECTORY_SEPARATOR.'..';
+            $file = realpath($currentDirectory.$rel).DIRECTORY_SEPARATOR.self::HTACCESS_FILE;
             if (is_file($file) && is_readable($file)) {
                 $this->htaccessFiles[$file] = true;
+                $this->debug('LOADING: '.$file);
+            } else {
+                $this->debug('missing: '.$file);
             }
-            $rel .= '..'.DIRECTORY_SEPARATOR;
         }
     }
 
@@ -109,14 +121,14 @@ class Htfaker
                 $this->debug('applyHtaccess: ERROR: '.$file);
                 continue;
             }
-            $this->debug('applyHtaccess: '.$file);
+            //$this->debug('applyHtaccess: '.$file);
             foreach ($this->directives as $directive) {
                 if ($result = $contents->search($directive)) {
                     $this->apply[$directive][] = (string)$result;
                 }
             }
         }
-        $this->debug('applyHtaccess: apply: '.print_r($this->apply, true));
+        $this->debug('apply directives: '.print_r($this->apply, true));
     }
 
     /**
@@ -146,7 +158,9 @@ class Htfaker
             return;
         }
         echo '<pre style="background-color:#ffffaa;margin:0;">'
+            ."\n"
             .print_r($message, true)
+            ."\n"
             .'</pre>';
     }
 }

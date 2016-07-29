@@ -35,7 +35,7 @@ please fork and contribute!
 
 [core](http://httpd.apache.org/docs/trunk/mod/core.html#allowoverride) | *status*<a id="core"></a>
 -------------------- | --------------------
-[ErrorDocument](http://httpd.apache.org/docs/trunk/mod/core.html#errordocument) | 0%
+[ErrorDocument](http://httpd.apache.org/docs/trunk/mod/core.html#errordocument) | 1%
 ErrorDocument 400 (Bad Request) | 0%
 ErrorDocument 401 (Unauthorized) | 0%
 ErrorDocument 402 (Payment Required) | 0%
@@ -43,7 +43,7 @@ ErrorDocument 403 (Forbidden) | 0%
 ErrorDocument 404 (Not Found) | 0%
 ErrorDocument 500 (Internal Server Error) | 0%
 [ForceType](http://httpd.apache.org/docs/trunk/mod/core.html#forcetype) | 0%
-[Options](http://httpd.apache.org/docs/trunk/mod/core.html#options) | 0%
+[Options](http://httpd.apache.org/docs/trunk/mod/core.html#options) | 1%
 Options -Indexes | 0%
 Options +Indexes | 0%
 
@@ -63,8 +63,8 @@ Options +Indexes | 0%
 
 [mod_dir](http://httpd.apache.org/docs/trunk/mod/mod_dir.html) | *status*
 -------------------- | --------------------
-[DirectoryIndex](https://httpd.apache.org/docs/trunk/mod/mod_dir.html#directoryindex) | 0%
-[FallbackResource](https://httpd.apache.org/docs/trunk/mod/mod_dir.html#fallbackresource) | 0%
+[DirectoryIndex](https://httpd.apache.org/docs/trunk/mod/mod_dir.html#directoryindex) | 1%
+[FallbackResource](https://httpd.apache.org/docs/trunk/mod/mod_dir.html#fallbackresource) | 1%
 
 [mod_rewrite](http://httpd.apache.org/docs/trunk/mod/mod_rewrite.html) | *status*
 -------------------- | --------------------

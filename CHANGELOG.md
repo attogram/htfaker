@@ -6,6 +6,8 @@
 ## [Unreleased]
 
 - Work in progress...
+- incorporate Request object from
+  [symfony/http-foundation](http://symfony.com/doc/current/components/http_foundation.html)
 
 ## [v0.0.1] - 2016-07-27
 
