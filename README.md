@@ -1,5 +1,16 @@
 # htfaker
 
+[![Latest Stable Version](https://poser.pugx.org/attogram/htfaker/v/stable)](https://packagist.org/packages/attogram/htfaker)
+[![Latest Unstable Version](https://poser.pugx.org/attogram/htfaker/v/unstable)](https://packagist.org/packages/attogram/htfaker)
+[![Total Downloads](https://poser.pugx.org/attogram/htfaker/downloads)](https://packagist.org/packages/attogram/htfaker)
+[![License](https://poser.pugx.org/attogram/htfaker/license)](https://github.com/attogram/htfaker/blob/master/LICENSE.md)
+[![Code Climate](https://codeclimate.com/github/attogram/htfaker/badges/gpa.svg)](https://codeclimate.com/github/attogram/htfaker)
+[![Issue Count](https://codeclimate.com/github/attogram/htfaker/badges/issue_count.svg)](https://codeclimate.com/github/attogram/htfaker)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/798587683ca54661a8fb5df5ed850745)](https://www.codacy.com/app/attogram-project/htfaker?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=attogram/htfaker&amp;utm_campaign=Badge_Grade)
+[`[CHANGELOG]`](https://github.com/attogram/htfaker/blob/master/CHANGELOG.md)
+[`[TODO]`](https://github.com/attogram/htfaker/blob/master/TODO.md)
+
+
 [htfaker](https://github.com/attogram/htfaker)
 is a PHP library that emulates
 [Apache .htaccess](https://httpd.apache.org/docs/current/howto/htaccess.html)
