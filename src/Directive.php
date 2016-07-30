@@ -10,10 +10,11 @@ class Directive implements DirectiveInterface
      * @return mixed
      */
     public function apply(
-        \Symfony\Component\HttpFoundation\Request $request,
+        \Attogram\Htfaker\Router $htfaker,
         array $directives
     ) {
-        return '[IN DEV: '.implode(', ', $directives).']';
+        $htfaker->debug(get_class($this).'::apply: '.print_r($directives, true));
+        return false;
     }
 
 }

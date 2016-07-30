@@ -5,12 +5,12 @@ namespace Attogram\Htfaker;
 interface DirectiveInterface
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param array $directives List of directives
+     * @param \Attogram\Htfaker\Router $htfaker
+     * @param array $directives List of directives to apply
      * @return mixed
      */
     public function apply(
-        \Symfony\Component\HttpFoundation\Request $request,
+        \Attogram\Htfaker\Router $htfaker,
         array $directives
     );
 }

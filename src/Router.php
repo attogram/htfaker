@@ -48,9 +48,10 @@ class Router
      */
     public function run()
     {
+        //$this->debug('run: server: '.print_r($this->request->server, true));
         $this->setHtaccessFiles(); // get all .htaccess files
         if (!$this->htaccessFiles) { // No .htaccess files found
-            $this->debug('No .htaccess files found. return false');
+            $this->debug('No '.self::HTACCESS_FILE.' files found. return false');
             return false; // send request back to server
         }
         $this->parseHtaccessFiles();
@@ -120,26 +121,24 @@ class Router
         //$this->debug('getBasePath: '.$this->request->getBasePath());
         //$this->debug('getPathInfo: '.$this->request->getPathInfo());
         //$this->debug('getScriptName: '.$this->request->getScriptName());
+        //$this->debug('server: '.print_r($this->request->server, true));
 
-        if (!$uri = $this->request->getBasePath()) {
-            $uri = $this->request->getPathInfo();
-        }
-        $uri = '.'.$uri;
-        $uri = realpath($uri);
+        $uri = '.'.$this->request->getScriptName();
         $this->debug('uri: '.$uri);
+
         if (is_file($uri)) {
             $this->isFile = $uri;
-            $this->debug('+ IS FILE');
+            //$this->debug('+ IS FILE');
         } else {
             //$this->debug('- not file');
         }
         if (is_dir($uri)) {
-            $this->debug('+ IS DIR');
+            //$this->debug('+ IS DIR');
             $this->isDir = $uri;
             foreach ($this->indexi as $index) {
                 if (is_file($uri.DIRECTORY_SEPARATOR.$index)) {
                     $this->isFile = $uri.DIRECTORY_SEPARATOR.$index;
-                    $this->debug('+ DIR HAS '.$index);
+                    //$this->debug('+ DIR HAS '.$index);
                     break;
                 } else {
                     //$this->debug('- not has '.$index);
@@ -177,7 +176,7 @@ class Router
             if (class_exists($className)) {
                 //$this->debug('CLASS EXISTS: '.$className);
                 $class = new $className();
-                $result = $class->apply($this->request, $this->apply[$directive]);
+                $result = $class->apply($this, $this->apply[$directive]);
                 $this->debug($directive.': '.print_r($result, true));
             } else {
                 $this->debug('ERROR: directive class not found: '.$className);
