@@ -9,23 +9,32 @@ class Router
     const HTFAKER_VERSION = '0.0.2';
     const HTACCESS_FILE = '.htaccess';
 
+    /** @var Symfony\Component\HttpFoundation\Request The Request object */
     public $request;
+    /** @var bool Debug on/off */
     public $debug = false;
+    /** @var array List of all .htaccess files that can be applied to current request */
     public $htaccessFiles = array();
+    /** @var Tivie\HtaccessParser\Parser .htacces parser */
     public $parser;
+    /** @var array List of .htaccess directives to be applied to current request */
     public $apply = array();
+    /** @var array List of .htaccess directives that can be parsed */
     public $directives = array(
         'Options',
         'FallbackResource',
         'ErrorDocument',
         'DirectoryIndex'
     );
+    /** @var array List of default index filenames */
     public $indexi = array(
         'index.php',
         'index.html'
     );
-    public $isFile = false;
-    public $isDir = false;
+    /** @var string The filename of the request */
+    public $file;
+    /** @var string The directory of the request */
+    public $directory;
 
     /**
      * start htfaker router
@@ -49,7 +58,7 @@ class Router
     public function run()
     {
         //$this->debug('run: server: '.print_r($this->request->server, true));
-        $this->setHtaccessFiles(); // get all .htaccess files
+        $this->setHtaccessFiles(); // get all possible .htaccess files for this request
         if (!$this->htaccessFiles) { // No .htaccess files found
             $this->debug('No '.self::HTACCESS_FILE.' files found. return false');
             return false; // send request back to server
@@ -74,7 +83,7 @@ class Router
         $this->debug('currentDirectory: '.$currentDirectory);
         $file = $currentDirectory.DIRECTORY_SEPARATOR.self::HTACCESS_FILE;
         if (is_file($file) && is_readable($file)) {
-            $this->htaccessFiles[$file] = true;
+            $this->htaccessFiles[$file] = true; // .htaccess from current directory
             $this->debug('LOADING: '.$file);
         } else {
             $this->debug('missing: '.$file);
@@ -89,7 +98,7 @@ class Router
             $rel .= DIRECTORY_SEPARATOR.'..';
             $file = realpath($currentDirectory.$rel).DIRECTORY_SEPARATOR.self::HTACCESS_FILE;
             if (is_file($file) && is_readable($file)) {
-                $this->htaccessFiles[$file] = true;
+                $this->htaccessFiles[$file] = true; // .htaccess from higher directories
                 $this->debug('LOADING: '.$file);
             } else {
                 $this->debug('missing: '.$file);
@@ -120,24 +129,24 @@ class Router
         //$this->debug('getBaseUrl: '.$this->request->getBaseUrl());
         //$this->debug('getBasePath: '.$this->request->getBasePath());
         //$this->debug('getPathInfo: '.$this->request->getPathInfo());
-        //$this->debug('getScriptName: '.$this->request->getScriptName());
+        $this->debug('getScriptName: '.$this->request->getScriptName());
         //$this->debug('server: '.print_r($this->request->server, true));
 
         $uri = '.'.$this->request->getScriptName();
         $this->debug('uri: '.$uri);
 
         if (is_file($uri)) {
-            $this->isFile = $uri;
+            $this->file = $uri;
             //$this->debug('+ IS FILE');
         } else {
             //$this->debug('- not file');
         }
         if (is_dir($uri)) {
             //$this->debug('+ IS DIR');
-            $this->isDir = $uri;
+            $this->directory = $uri;
             foreach ($this->indexi as $index) {
                 if (is_file($uri.DIRECTORY_SEPARATOR.$index)) {
-                    $this->isFile = $uri.DIRECTORY_SEPARATOR.$index;
+                    $this->file = $uri.DIRECTORY_SEPARATOR.$index;
                     //$this->debug('+ DIR HAS '.$index);
                     break;
                 } else {
@@ -147,8 +156,8 @@ class Router
         } else {
             //$this->debug('- not dir');
         }
-        $this->debug('isFile: '.$this->isFile);
-        $this->debug('isDir: '.$this->isDir);
+        $this->debug('file: '.($this->file ? $this->file : 'null'));
+        $this->debug('directory: '.($this->directory ? $this->directory : 'null'));
     }
 
     /**
@@ -162,7 +171,7 @@ class Router
                 $this->debug('applyHtaccess: ERROR: '.$file);
                 continue;
             }
-            //$this->debug('applyHtaccess: '.$file);
+            // build a list of directives that may be applied
             foreach ($this->directives as $directive) {
                 if ($result = $contents->search($directive)) {
                     $this->apply[$directive][] = (string)$result;
@@ -177,9 +186,9 @@ class Router
                 //$this->debug('CLASS EXISTS: '.$className);
                 $class = new $className();
                 $result = $class->apply($this, $this->apply[$directive]);
-                $this->debug($directive.': '.print_r($result, true));
+                $this->debug($directive.' result: '.print_r($result, true));
             } else {
-                $this->debug('ERROR: directive class not found: '.$className);
+                $this->debug('applyHtaccess: ERROR: directive class not found: '.$className);
             }
         }
     }
