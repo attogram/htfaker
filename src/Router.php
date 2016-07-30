@@ -13,6 +13,10 @@ class Router
     public $request;
     /** @var bool Debug on/off */
     public $debug = false;
+    /** @var string The Document Root of current request */
+    public $documentRoot;
+    /** @var string The Current Directory of current request */
+    public $currentDirectory;
     /** @var array List of all .htaccess files that can be applied to current request */
     public $htaccessFiles = array();
     /** @var Tivie\HtaccessParser\Parser .htacces parser */
@@ -57,7 +61,14 @@ class Router
      */
     public function run()
     {
-        //$this->debug('run: server: '.print_r($this->request->server, true));
+        $this->debug('getUri: '.$this->request->getUri());
+        $this->debug('getRequestUri: '.$this->request->getRequestUri());
+        $this->debug('getBaseUrl: '.$this->request->getBaseUrl());
+        $this->debug('getBasePath: '.$this->request->getBasePath());
+        $this->debug('getPathInfo: '.$this->request->getPathInfo());
+        $this->debug('getScriptName: '.$this->request->getScriptName());
+        //$this->debug('server: '.print_r($this->request->server, true));
+
         $this->setHtaccessFiles(); // get all possible .htaccess files for this request
         if (!$this->htaccessFiles) { // No .htaccess files found
             $this->debug('No '.self::HTACCESS_FILE.' files found. return false');
@@ -71,14 +82,34 @@ class Router
     }
 
     /**
+     * @see Router::$documentRoot
+     * @return void
+     */
+    public function setDocumentRoot()
+    {
+        $this->documentRoot = $this->request->server->get('DOCUMENT_ROOT');
+    }
+
+    /**
+     * @see Router::$documentRoot
+     * @return string The Document Root of current request
+     */
+    public function getDocumentRoot()
+    {
+        if (!$this->documentRoot) {
+            $this->setDocumentRoot();
+        }
+        return $this->documentRoot;
+    }
+
+    /**
      * set a list of readable .htaccess files for this request
      * in format:  htaccessFiles[ path_and_filename ] = true
-     * @see Htfaker::$htaccessFiles
+     * @see Router::$htaccessFiles
      */
     public function setHtaccessFiles()
     {
-        $documentRoot = $this->request->server->get('DOCUMENT_ROOT');
-        $this->debug('documentRoot: '.$documentRoot);
+        $this->debug('documentRoot: '.$this->getDocumentRoot());
         $currentDirectory = dirname($this->request->server->get('SCRIPT_FILENAME'));
         $this->debug('currentDirectory: '.$currentDirectory);
         $file = $currentDirectory.DIRECTORY_SEPARATOR.self::HTACCESS_FILE;
@@ -88,10 +119,10 @@ class Router
         } else {
             $this->debug('missing: '.$file);
         }
-        if ($currentDirectory == $documentRoot) {
+        if ($currentDirectory == $this->getDocumentRoot()) {
             return;
         }
-        $levels = str_replace($documentRoot, '', $currentDirectory);
+        $levels = str_replace($this->getDocumentRoot(), '', $currentDirectory);
         $levelsCount = sizeof(explode(DIRECTORY_SEPARATOR, $levels)) - 2;
         $rel = '..';
         for ($x = 0; $x <= $levelsCount; $x++ ) {
@@ -108,7 +139,7 @@ class Router
 
     /**
      * parse all files in the htaccessFiles list
-     * @see Htfaker::$htaccessFiles
+     * @see Router::$htaccessFiles
      */
     public function parseHtaccessFiles()
     {
@@ -124,14 +155,6 @@ class Router
      */
     public function checkRequest()
     {
-        //$this->debug('getUri: '.$this->request->getUri());
-        //$this->debug('getRequestUri: '.$this->request->getRequestUri());
-        //$this->debug('getBaseUrl: '.$this->request->getBaseUrl());
-        //$this->debug('getBasePath: '.$this->request->getBasePath());
-        //$this->debug('getPathInfo: '.$this->request->getPathInfo());
-        $this->debug('getScriptName: '.$this->request->getScriptName());
-        //$this->debug('server: '.print_r($this->request->server, true));
-
         $uri = '.'.$this->request->getScriptName();
         $this->debug('uri: '.$uri);
 
@@ -162,7 +185,7 @@ class Router
 
     /**
      * Apply all the applicable htaccess rules for this request
-     * @see Htfaker::$htaccessFiles
+     * @see Router::$htaccessFiles
      */
     public function applyHtaccess()
     {
@@ -195,7 +218,7 @@ class Router
 
     /**
      * get the .htaccess parser object
-     * @see Htfaker:$parser
+     * @see Router::$parser
      * @return object
      */
     public function getParser()
@@ -212,7 +235,7 @@ class Router
     /**
      * debug message
      * @param mixed $message (optional)
-     * @see Htfaker::$debug
+     * @see Router::$debug
      */
     public function debug($message = '')
     {

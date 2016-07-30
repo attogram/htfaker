@@ -22,33 +22,7 @@ h2 { font-size: 20px; padding:0; margin:0; font-weight:normal; }
   functionality for the
   <a href="http://php.net/manual/en/features.commandline.webserver.php">PHP built-in web server</a>
 </h2>
-<p>webtests:</p>
-<ul>
-  <li><a href="webtests/control-html">control-html</a></li>
-  <li><a href="webtests/control-html/">control-html/</a></li>
-  <li><a href="webtests/control-html/index.html">control-html/index.html</a></li>
-</ul>
-<ul>
-  <li><a href="webtests/control-php">control-php</a></li>
-  <li><a href="webtests/control-php/">control-php/</a></li>
-  <li><a href="webtests/control-php/index.php">control-php/index.php</a></li>
-</ul>
-<ul>
-  <li><a href="webtests/ErrorDocument-404">ErrorDocument-404</a></li>
-  <li><a href="webtests/ErrorDocument-404/">ErrorDocument-404/</a></li>
-  <li><a href="webtests/ErrorDocument-404/non.html">ErrorDocument-404/non.html</a></li>
-  <li><a href="webtests/ErrorDocument-404/404.php">ErrorDocument-404/404.php</a></li>
-</ul>
-<ul>
-  <li><a href="webtests/DirectoryIndex">DirectoryIndex</a></li>
-  <li><a href="webtests/DirectoryIndex/">DirectoryIndex/</a></li>
-  <li><a href="webtests/DirectoryIndex/index.php">DirectoryIndex/index.php</a></li>
-</ul>
-<ul>
-  <li><a href="webtests/DirectoryIndex/2">DirectoryIndex/2</a></li>
-  <li><a href="webtests/DirectoryIndex/2/">DirectoryIndex/2/</a></li>
-  <li><a href="webtests/DirectoryIndex/2/index2.php">DirectoryIndex/2/index2.php</a></li>
-</ul>
+<h3><a href="webtests/">webtests</a></h3>
 <a href="https://github.com/attogram/htfaker"><img style="position:absolute;top:0;right:0;border:0;"
 src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67"
 alt="Fork me on GitHub"
