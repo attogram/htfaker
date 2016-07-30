@@ -6,7 +6,7 @@ use Tivie\HtaccessParser\Parser;
 
 class Router
 {
-    const HTFAKER_VERSION = '0.0.1';
+    const HTFAKER_VERSION = '0.0.2';
     const HTACCESS_FILE = '.htaccess';
 
     public $request;
