@@ -5,7 +5,6 @@
 [![Total Downloads](https://poser.pugx.org/attogram/htfaker/downloads)](https://packagist.org/packages/attogram/htfaker)
 [![License](https://poser.pugx.org/attogram/htfaker/license)](https://github.com/attogram/htfaker/blob/master/LICENSE.md)
 [![Code Climate](https://codeclimate.com/github/attogram/htfaker/badges/gpa.svg)](https://codeclimate.com/github/attogram/htfaker)
-[![Issue Count](https://codeclimate.com/github/attogram/htfaker/badges/issue_count.svg)](https://codeclimate.com/github/attogram/htfaker)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/798587683ca54661a8fb5df5ed850745)](https://www.codacy.com/app/attogram-project/htfaker?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=attogram/htfaker&amp;utm_campaign=Badge_Grade)
 [`[CHANGELOG]`](https://github.com/attogram/htfaker/blob/master/CHANGELOG.md)
 
@@ -93,7 +92,7 @@ Options +Indexes | 0%
 [PSR-1 Basic Coding Standard](http://www.php-fig.org/psr/psr-1/) | ?
 [PSR-2 Coding Style Guide](http://www.php-fig.org/psr/psr-2/) | ?
 [PSR-3 Logger Interface](http://www.php-fig.org/psr/psr-3/) | 0%
-[PSR-4 Autoloading](http://www.php-fig.org/psr/psr-4/) | 50%
+[PSR-4 Autoloading](http://www.php-fig.org/psr/psr-4/) | 75%
 [PSR-5 PHPDoc](https://github.com/phpDocumentor/fig-standards/blob/master/proposed/phpdoc.md) | ?
 [PSR-7 HTTP message interfaces](http://www.php-fig.org/psr/psr-7/) | 0%
 [Stack HttpKernelInterface](http://stackphp.com/) | 0%
