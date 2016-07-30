@@ -4,7 +4,7 @@ namespace Attogram\Htfaker;
 
 use Tivie\HtaccessParser\Parser;
 
-class Htfaker
+class Router
 {
     const HTFAKER_VERSION = '0.0.1';
     const HTACCESS_FILE = '.htaccess';
@@ -28,7 +28,7 @@ class Htfaker
     public $isDir = false;
 
     /**
-     * start htfaker
+     * start htfaker router
      * @param obj $request \Symfony\Component\HttpFoundation\Request object
      * @param bool $debug (optional) Debug messages on/off
      */
@@ -42,7 +42,7 @@ class Htfaker
     }
 
     /**
-     * run htfaker
+     * run htfaker router
      * @return bool  true: handle current request
      *               false: pass control back to server
      */

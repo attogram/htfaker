@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 require 'vendor/autoload.php';
 
-$htfaker = new \Attogram\Htfaker\Htfaker(
+$htfaker = new \Attogram\Htfaker\Router(
   Request::createFromGlobals(),
   true // debug
 );
