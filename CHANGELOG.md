@@ -6,8 +6,13 @@
 ## [Unreleased]
 
 - Work in progress...
+
+## [v0.0.2] - 2016-07-30
+
+- framework for application class per each directive
 - incorporate Request object from
   [symfony/http-foundation](http://symfony.com/doc/current/components/http_foundation.html)
+- project status tables in README.md
 
 ## [v0.0.1] - 2016-07-27
 
@@ -18,6 +23,7 @@
 
 - Repo created: <https://github.com/attogram/htfaker>
 
-[Unreleased]: https://github.com/attogram/htfaker/compare/v0.0.1...HEAD
+[Unreleased]: https://github.com/attogram/htfaker/compare/v0.0.2...HEAD
+[v0.0.2]: https://github.com/attogram/htfaker/compare/v0.0.1...v0.0.2
 [v0.0.1]: https://github.com/attogram/htfaker/compare/4a6da88...v0.0.1
 [v0.0.0]: https://github.com/attogram/htfaker/tree/4a6da88
