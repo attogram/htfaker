@@ -19,9 +19,12 @@ functionality for the
 
 ## Usage
 
-Example usage:
+Example test usage:
 
-``php -S localhost:8080 router.php``
+```
+cd vendor/attogram/htfaker
+php -S localhost:8080 router.php
+```
 
 then open [http://localhost:8080/](http://localhost:8080/) in your web browser.
 
@@ -34,7 +37,7 @@ please fork and contribute!
 
 [core](http://httpd.apache.org/docs/trunk/mod/core.html#allowoverride) | *status*<a id="core"></a>
 -------------------- | --------------------
-[ErrorDocument](http://httpd.apache.org/docs/trunk/mod/core.html#errordocument) | 1%
+[ErrorDocument](http://httpd.apache.org/docs/trunk/mod/core.html#errordocument) | [5%](https://github.com/attogram/htfaker/blob/master/src/ErrorDocument.php)
 ErrorDocument 400 (Bad Request) | 0%
 ErrorDocument 401 (Unauthorized) | 0%
 ErrorDocument 402 (Payment Required) | 0%
@@ -42,7 +45,7 @@ ErrorDocument 403 (Forbidden) | 0%
 ErrorDocument 404 (Not Found) | 0%
 ErrorDocument 500 (Internal Server Error) | 0%
 [ForceType](http://httpd.apache.org/docs/trunk/mod/core.html#forcetype) | 0%
-[Options](http://httpd.apache.org/docs/trunk/mod/core.html#options) | 1%
+[Options](http://httpd.apache.org/docs/trunk/mod/core.html#options) | [5%](https://github.com/attogram/htfaker/blob/master/src/Options.php)
 Options -Indexes | 0%
 Options +Indexes | 0%
 
@@ -62,8 +65,8 @@ Options +Indexes | 0%
 
 [mod_dir](http://httpd.apache.org/docs/trunk/mod/mod_dir.html) | *status*
 -------------------- | --------------------
-[DirectoryIndex](https://httpd.apache.org/docs/trunk/mod/mod_dir.html#directoryindex) | 1%
-[FallbackResource](https://httpd.apache.org/docs/trunk/mod/mod_dir.html#fallbackresource) | 1%
+[DirectoryIndex](https://httpd.apache.org/docs/trunk/mod/mod_dir.html#directoryindex) | [5%](https://github.com/attogram/htfaker/blob/master/src/DirectoryIndex.php)
+[FallbackResource](https://httpd.apache.org/docs/trunk/mod/mod_dir.html#fallbackresource) | [5%](https://github.com/attogram/htfaker/blob/master/src/FallbackResource.php)
 
 [mod_rewrite](http://httpd.apache.org/docs/trunk/mod/mod_rewrite.html) | *status*
 -------------------- | --------------------
