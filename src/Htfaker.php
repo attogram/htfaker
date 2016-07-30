@@ -114,12 +114,12 @@ class Htfaker
      */
     public function checkRequest()
     {
-        $this->debug('getUri: '.$this->request->getUri());
-        $this->debug('getRequestUri: '.$this->request->getRequestUri());
-        $this->debug('getBaseUrl: '.$this->request->getBaseUrl());
-        $this->debug('getBasePath: '.$this->request->getBasePath());
-        $this->debug('getPathInfo: '.$this->request->getPathInfo());
-        $this->debug('getScriptName: '.$this->request->getScriptName());
+        //$this->debug('getUri: '.$this->request->getUri());
+        //$this->debug('getRequestUri: '.$this->request->getRequestUri());
+        //$this->debug('getBaseUrl: '.$this->request->getBaseUrl());
+        //$this->debug('getBasePath: '.$this->request->getBasePath());
+        //$this->debug('getPathInfo: '.$this->request->getPathInfo());
+        //$this->debug('getScriptName: '.$this->request->getScriptName());
 
         if (!$uri = $this->request->getBasePath()) {
             $uri = $this->request->getPathInfo();
@@ -142,7 +142,7 @@ class Htfaker
                     $this->debug('+ DIR HAS '.$index);
                     break;
                 } else {
-                    $this->debug('- not has '.$index);
+                    //$this->debug('- not has '.$index);
                 }
             }
         } else {
@@ -178,9 +178,9 @@ class Htfaker
                 //$this->debug('CLASS EXISTS: '.$className);
                 $class = new $className();
                 $result = $class->apply($this->request, $this->apply[$directive]);
-                $this->debug($className.'::apply: '.print_r($result, true));
+                $this->debug($directive.': '.print_r($result, true));
             } else {
-                $this->debug('no class: '.$className);
+                $this->debug('ERROR: directive class not found: '.$className);
             }
         }
     }

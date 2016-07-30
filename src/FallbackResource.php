@@ -2,18 +2,7 @@
 
 namespace Attogram\Htfaker;
 
-class FallbackResource implements DirectiveInterface
+class FallbackResource extends Directive implements DirectiveInterface
 {
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param array $directives List of directives
-     * @return mixed
-     */
-    public function apply(
-        \Symfony\Component\HttpFoundation\Request $request,
-        array $directives
-    ) {
-        return '[IN DEV: '.implode(', ', $directives).']';
-    }
-
+    //
 }
