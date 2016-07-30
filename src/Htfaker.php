@@ -10,36 +10,35 @@ class Htfaker
     const HTACCESS_FILE = '.htaccess';
 
     public $request;
-    public $debug;
-    public $htaccessFiles;
+    public $debug = false;
+    public $htaccessFiles = array();
     public $parser;
-    public $apply;
+    public $apply = array();
     public $directives = array(
-      'Options',
-      'FallbackResource',
-      'ErrorDocument',
-      'DirectoryIndex'
+        'Options',
+        'FallbackResource',
+        'ErrorDocument',
+        'DirectoryIndex'
     );
+    public $indexi = array(
+        'index.php',
+        'index.html'
+    );
+    public $isFile = false;
+    public $isDir = false;
 
     /**
      * start htfaker
      * @param obj $request \Symfony\Component\HttpFoundation\Request object
      * @param bool $debug (optional) Debug messages on/off
      */
-    public function __construct($request, $debug = false)
-    {
+    public function __construct(
+        \Symfony\Component\HttpFoundation\Request $request,
+        $debug = false
+    ) {
         $this->request = $request;
         $this->debug = $debug;
-        $this->debug('htfaker v'.self::HTFAKER_VERSION);
-        //$this->debug('getScriptName: '.$this->request->getScriptName());
-        //$this->debug('getPathInfo: '.$this->request->getPathInfo());
-        //$this->debug('getBasePath: '.$this->request->getBasePath());
-        //$this->debug('getBaseUrl: '.$this->request->getBaseUrl());
-        //$this->debug('getRequestUri: '.$this->request->getRequestUri());
-        //$this->debug('getSchemeAndHttpHost: '.$this->request->getSchemeAndHttpHost());
-        //$this->debug('getUri: '.$this->request->getUri());
-        //getUriForPath($path)
-        //getRelativeUriForPath($string)
+        $this->debug('htfaker v'.self::HTFAKER_VERSION.' @ '.gmdate('Y-m-d h:i:s'));
     }
 
     /**
@@ -49,13 +48,13 @@ class Htfaker
      */
     public function run()
     {
-        $this->setHtaccessFiles();
-        //$this->debug('# htaccessFiles: '.count($this->htaccessFiles));
-        if (!$this->htaccessFiles) {
-            $this->debug('return false');
+        $this->setHtaccessFiles(); // get all .htaccess files
+        if (!$this->htaccessFiles) { // No .htaccess files found
+            $this->debug('No .htaccess files found. return false');
             return false; // send request back to server
         }
         $this->parseHtaccessFiles();
+        $this->checkRequest();
         $this->applyHtaccess();
         $this->debug('IN DEV. return false');
         return false; // send request back to server
@@ -69,9 +68,9 @@ class Htfaker
     public function setHtaccessFiles()
     {
         $documentRoot = $this->request->server->get('DOCUMENT_ROOT');
-        //$this->debug('documentRoot    : '.$documentRoot);
+        $this->debug('documentRoot: '.$documentRoot);
         $currentDirectory = dirname($this->request->server->get('SCRIPT_FILENAME'));
-        //$this->debug('currentDirectory: '.$currentDirectory);
+        $this->debug('currentDirectory: '.$currentDirectory);
         $file = $currentDirectory.DIRECTORY_SEPARATOR.self::HTACCESS_FILE;
         if (is_file($file) && is_readable($file)) {
             $this->htaccessFiles[$file] = true;
@@ -84,7 +83,7 @@ class Htfaker
         }
         $levels = str_replace($documentRoot, '', $currentDirectory);
         $levelsCount = sizeof(explode(DIRECTORY_SEPARATOR, $levels)) - 2;
-        $rel = '..'.DIRECTORY_SEPARATOR;
+        $rel = '..';
         for ($x = 0; $x <= $levelsCount; $x++ ) {
             $rel .= DIRECTORY_SEPARATOR.'..';
             $file = realpath($currentDirectory.$rel).DIRECTORY_SEPARATOR.self::HTACCESS_FILE;
@@ -111,6 +110,49 @@ class Htfaker
     }
 
     /**
+     *
+     */
+    public function checkRequest()
+    {
+        $this->debug('getUri: '.$this->request->getUri());
+        $this->debug('getRequestUri: '.$this->request->getRequestUri());
+        $this->debug('getBaseUrl: '.$this->request->getBaseUrl());
+        $this->debug('getBasePath: '.$this->request->getBasePath());
+        $this->debug('getPathInfo: '.$this->request->getPathInfo());
+        $this->debug('getScriptName: '.$this->request->getScriptName());
+
+        if (!$uri = $this->request->getBasePath()) {
+            $uri = $this->request->getPathInfo();
+        }
+        $uri = '.'.$uri;
+        $uri = realpath($uri);
+        $this->debug('uri: '.$uri);
+        if (is_file($uri)) {
+            $this->isFile = $uri;
+            $this->debug('+ IS FILE');
+        } else {
+            //$this->debug('- not file');
+        }
+        if (is_dir($uri)) {
+            $this->debug('+ IS DIR');
+            $this->isDir = $uri;
+            foreach ($this->indexi as $index) {
+                if (is_file($uri.DIRECTORY_SEPARATOR.$index)) {
+                    $this->isFile = $uri.DIRECTORY_SEPARATOR.$index;
+                    $this->debug('+ DIR HAS '.$index);
+                    break;
+                } else {
+                    $this->debug('- not has '.$index);
+                }
+            }
+        } else {
+            //$this->debug('- not dir');
+        }
+        $this->debug('isFile: '.$this->isFile);
+        $this->debug('isDir: '.$this->isDir);
+    }
+
+    /**
      * Apply all the applicable htaccess rules for this request
      * @see Htfaker::$htaccessFiles
      */
@@ -128,7 +170,19 @@ class Htfaker
                 }
             }
         }
-        $this->debug('apply directives: '.print_r($this->apply, true));
+        //$this->debug('apply directives: '.print_r($this->apply, true));
+        $namespace = 'Attogram\\Htfaker\\';
+        foreach (array_keys($this->apply) as $directive) {
+            $className = $namespace.$directive;
+            if (class_exists($className)) {
+                //$this->debug('CLASS EXISTS: '.$className);
+                $class = new $className();
+                $result = $class->apply($this->request, $this->apply[$directive]);
+                $this->debug($className.'::apply: '.print_r($result, true));
+            } else {
+                $this->debug('no class: '.$className);
+            }
+        }
     }
 
     /**
