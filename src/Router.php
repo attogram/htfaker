@@ -63,9 +63,13 @@ class Router
         //$this->debug('getBaseUrl: '.$this->request->getBaseUrl());
         //$this->debug('getBasePath: '.$this->request->getBasePath());
         //$this->debug('getPathInfo: '.$this->request->getPathInfo());
-        //$this->debug('getScriptName: '.$this->request->getScriptName());
+        $this->debug('getScriptName: '.$this->request->getScriptName());
+        //$this->debug('__DIR__: '.__DIR__);
+        //$this->debug('__FILE__: '.__FILE__);
+        //$this->debug('cwd: '.getcwd());
         //$this->debug('server: '.print_r($this->request->server, true));
-        //$this->debug('SCRIPT_FILENAME='.$this->request->server->get('SCRIPT_FILENAME'));
+        //$this->debug('SCRIPT_NAME='.$this->request->server->get('SCRIPT_NAME'));
+        $this->debug('PHP_SELF: '.$this->request->server->get('PHP_SELF'));
 
         $this->debug('documentRoot: '.$this->getDocumentRoot());
         $this->debug('currentDirectory: '.$this->getCurrentDirectory());
