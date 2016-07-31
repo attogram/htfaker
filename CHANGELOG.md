@@ -6,6 +6,8 @@
 ## [Unreleased]
 
 - Work in progress...
+- incorporated [monolog/monolog](http://github.com/Seldaek/monolog) PSR-3 logger
+- updated webtests/
 
 ## [v0.0.2] - 2016-07-30
 

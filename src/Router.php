@@ -40,13 +40,16 @@ class Router
     /**
      * start htfaker router
      * @param obj $request \Symfony\Component\HttpFoundation\Request object
+     * @param obj $log \Psr\Log\LoggerInterface PSR-3 Logger
      * @param bool $debug (optional) Debug messages on/off
      */
     public function __construct(
         \Symfony\Component\HttpFoundation\Request $request,
+        \Psr\Log\LoggerInterface $log,
         $debug = false
     ) {
         $this->request = $request;
+        $this->log = $log;
         $this->debug = $debug;
         $this->debug('htfaker v'.self::HTFAKER_VERSION.' @ '.gmdate('Y-m-d h:i:s').' UTC');
     }
@@ -264,10 +267,6 @@ class Router
         if (!$this->debug) {
             return;
         }
-        echo '<pre style="background-color:#ffffaa;margin:0;">'
-            ."\n"
-            .print_r($message, true)
-            ."\n"
-            .'</pre>';
+        $this->log->debug($message);
     }
 }

@@ -7,6 +7,10 @@
   <body>
     <p>webtests:</p>
     <ul>
+      <li><a href="favicon.ico">favicon.ico</a></li>
+      <li><a href="../favicon.ico">../favicon.ico</a></li>
+    </ul>
+    <ul>
       <li><a href="control-html">control-html</a></li>
       <li><a href="control-html/">control-html/</a></li>
       <li><a href="control-html/index.html">control-html/index.html</a></li>

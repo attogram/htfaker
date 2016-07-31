@@ -32,8 +32,7 @@ then open [http://localhost:8080/](http://localhost:8080/) in your web browser.
 
 htfaker is in the planning stage. There is currently very little functionality.
 
-If you're interested in making a working library,
-please fork and contribute!
+If you're interested in making a working library, please fork and contribute!
 
 [core](http://httpd.apache.org/docs/trunk/mod/core.html#allowoverride) | *status*<a id="core"></a>
 -------------------- | --------------------
@@ -116,7 +115,6 @@ htfaker is dual licensed under
 Read the
 [LICENSE.md](https://github.com/attogram/htfaker/blob/master/LICENSE.md)
 file for more info.
-
 
 ## TODO
 
