@@ -69,17 +69,17 @@ class Router
         //$this->log->debug('SCRIPT_NAME='.$this->request->server->get('SCRIPT_NAME'));
         $this->log->debug('PHP_SELF: '.$this->request->server->get('PHP_SELF'));
 
-        $this->log->debug('documentRoot: '.$this->getDocumentRoot());
-        $this->log->debug('currentDirectory: '.$this->getCurrentDirectory());
+        $this->log->notice('documentRoot: '.$this->getDocumentRoot());
+        $this->log->notice('currentDirectory: '.$this->getCurrentDirectory());
         $this->setHtaccessFiles(); // get all possible .htaccess files for this request
         if (!$this->htaccessFiles) { // No .htaccess files found
-            $this->log->debug('No '.self::HTACCESS_FILE.' files found. return false');
+            $this->log->notice('No '.self::HTACCESS_FILE.' files found. return false');
             return false; // send request back to server
         }
         $this->parseHtaccessFiles();
         $this->checkRequest();
         $this->applyHtaccess();
-        $this->log->debug('IN DEV. return false');
+        $this->log->notice('IN DEV. return false');
         return false; // send request back to server
     }
 
@@ -135,7 +135,7 @@ class Router
         $file = $this->getCurrentDirectory().DIRECTORY_SEPARATOR.self::HTACCESS_FILE;
         if (is_file($file) && is_readable($file)) {
             $this->htaccessFiles[$file] = true; // .htaccess from current directory
-            $this->log->debug('LOADING: '.$file);
+            $this->log->notice('LOADING: '.$file);
         } else {
             $this->log->debug('missing: '.$file);
         }
@@ -150,7 +150,7 @@ class Router
             $file = realpath($this->getCurrentDirectory().$rel).DIRECTORY_SEPARATOR.self::HTACCESS_FILE;
             if (is_file($file) && is_readable($file)) {
                 $this->htaccessFiles[$file] = true; // .htaccess from higher directories
-                $this->log->debug('LOADING: '.$file);
+                $this->log->notice('LOADING: '.$file);
             } else {
                 $this->log->debug('missing: '.$file);
             }
@@ -199,8 +199,8 @@ class Router
         } else {
             //$this->log->debug('- not dir');
         }
-        $this->log->debug('file: '.($this->file ? $this->file : 'null'));
-        $this->log->debug('directory: '.($this->directory ? $this->directory : 'null'));
+        $this->log->notice('file: '.($this->file ? $this->file : 'null'));
+        $this->log->notice('directory: '.($this->directory ? $this->directory : 'null'));
     }
 
     /**
@@ -211,7 +211,7 @@ class Router
     {
         foreach ($this->htaccessFiles as $file => $contents) {
             if (!is_object($contents)) {
-                $this->log->debug('applyHtaccess: ERROR: '.$file);
+                $this->log->error('applyHtaccess: ERROR: '.$file);
                 continue;
             }
             // build a list of directives that may be applied
@@ -231,7 +231,7 @@ class Router
                 $result = $class->apply($this, $this->apply[$directive]);
                 $this->log->debug($directive.' result: '.print_r($result, true));
             } else {
-                $this->log->debug('applyHtaccess: ERROR: directive class not found: '.$className);
+                $this->log->error('applyHtaccess: ERROR: directive class not found: '.$className);
             }
         }
     }

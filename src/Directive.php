@@ -13,7 +13,7 @@ class Directive implements DirectiveInterface
         \Attogram\Htfaker\Router $htfaker,
         array $directives
     ) {
-        $htfaker->log->debug(get_class($this).'::apply: '.print_r($directives, true));
+        $htfaker->log->notice(get_class($this).'::apply:', $directives);
         return false;
     }
 

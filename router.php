@@ -13,9 +13,9 @@ require 'vendor/autoload.php';
 
 // Setup PSR-3 Logger object
 $log = new Logger('debug');
-$streamHandler = new StreamHandler('php://output');
+$streamHandler = new StreamHandler('php://output', Logger::DEBUG); // DEBUG, INFO, NOTICE, WARNING, ERROR, ...
 $streamHandler->setFormatter(new LineFormatter(
-    '<pre style="background-color:#ffffaa;margin:0;">%datetime%|%level_name%: %message% %context%</pre>', // %extra%
+    '<pre style="background-color:#ffffaa;margin:0;">%datetime%|%level_name%: %message% %context%</pre>',
     'Y-m-d|H:i:s:u'
 ));
 //$log->pushHandler(new BufferHandler($streamHandler));
