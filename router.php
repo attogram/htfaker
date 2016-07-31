@@ -21,10 +21,11 @@ $streamHandler->setFormatter(new LineFormatter(
 //$log->pushHandler(new BufferHandler($streamHandler));
 $log->pushHandler($streamHandler);
 
+$log->debug('router.php started');
+
 $htfaker = new \Attogram\Htfaker\Router(
   Request::createFromGlobals(),
-  $log,
-  true // debug
+  $log
 );
 
 // "If this script returns FALSE, then the requested resource is returned as-is.

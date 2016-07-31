@@ -11,8 +11,6 @@ class Router
 
     /** @var Symfony\Component\HttpFoundation\Request The Request object */
     public $request;
-    /** @var bool Debug on/off */
-    public $debug = false;
     /** @var string The Document Root of current request */
     public $documentRoot;
     /** @var string The Current Directory of current request */
@@ -41,17 +39,14 @@ class Router
      * start htfaker router
      * @param obj $request \Symfony\Component\HttpFoundation\Request object
      * @param obj $log \Psr\Log\LoggerInterface PSR-3 Logger
-     * @param bool $debug (optional) Debug messages on/off
      */
     public function __construct(
         \Symfony\Component\HttpFoundation\Request $request,
-        \Psr\Log\LoggerInterface $log,
-        $debug = false
+        \Psr\Log\LoggerInterface $log
     ) {
         $this->request = $request;
         $this->log = $log;
-        $this->debug = $debug;
-        $this->debug('htfaker v'.self::HTFAKER_VERSION.' @ '.gmdate('Y-m-d h:i:s').' UTC');
+        $this->log->debug('htfaker v'.self::HTFAKER_VERSION.' @ '.gmdate('Y-m-d h:i:s').' UTC');
     }
 
     /**
@@ -61,30 +56,30 @@ class Router
      */
     public function run()
     {
-        //$this->debug('getUri: '.$this->request->getUri());
-        //$this->debug('getRequestUri: '.$this->request->getRequestUri());
-        //$this->debug('getBaseUrl: '.$this->request->getBaseUrl());
-        //$this->debug('getBasePath: '.$this->request->getBasePath());
-        //$this->debug('getPathInfo: '.$this->request->getPathInfo());
-        $this->debug('getScriptName: '.$this->request->getScriptName());
-        //$this->debug('__DIR__: '.__DIR__);
-        //$this->debug('__FILE__: '.__FILE__);
-        //$this->debug('cwd: '.getcwd());
-        //$this->debug('server: '.print_r($this->request->server, true));
-        //$this->debug('SCRIPT_NAME='.$this->request->server->get('SCRIPT_NAME'));
-        $this->debug('PHP_SELF: '.$this->request->server->get('PHP_SELF'));
+        //$this->log->debug('getUri: '.$this->request->getUri());
+        //$this->log->debug('getRequestUri: '.$this->request->getRequestUri());
+        //$this->log->debug('getBaseUrl: '.$this->request->getBaseUrl());
+        //$this->log->debug('getBasePath: '.$this->request->getBasePath());
+        //$this->log->debug('getPathInfo: '.$this->request->getPathInfo());
+        $this->log->debug('getScriptName: '.$this->request->getScriptName());
+        //$this->log->debug('__DIR__: '.__DIR__);
+        //$this->log->debug('__FILE__: '.__FILE__);
+        //$this->log->debug('cwd: '.getcwd());
+        //$this->log->debug('server: '.print_r($this->request->server, true));
+        //$this->log->debug('SCRIPT_NAME='.$this->request->server->get('SCRIPT_NAME'));
+        $this->log->debug('PHP_SELF: '.$this->request->server->get('PHP_SELF'));
 
-        $this->debug('documentRoot: '.$this->getDocumentRoot());
-        $this->debug('currentDirectory: '.$this->getCurrentDirectory());
+        $this->log->debug('documentRoot: '.$this->getDocumentRoot());
+        $this->log->debug('currentDirectory: '.$this->getCurrentDirectory());
         $this->setHtaccessFiles(); // get all possible .htaccess files for this request
         if (!$this->htaccessFiles) { // No .htaccess files found
-            $this->debug('No '.self::HTACCESS_FILE.' files found. return false');
+            $this->log->debug('No '.self::HTACCESS_FILE.' files found. return false');
             return false; // send request back to server
         }
         $this->parseHtaccessFiles();
         $this->checkRequest();
         $this->applyHtaccess();
-        $this->debug('IN DEV. return false');
+        $this->log->debug('IN DEV. return false');
         return false; // send request back to server
     }
 
@@ -140,9 +135,9 @@ class Router
         $file = $this->getCurrentDirectory().DIRECTORY_SEPARATOR.self::HTACCESS_FILE;
         if (is_file($file) && is_readable($file)) {
             $this->htaccessFiles[$file] = true; // .htaccess from current directory
-            $this->debug('LOADING: '.$file);
+            $this->log->debug('LOADING: '.$file);
         } else {
-            $this->debug('missing: '.$file);
+            $this->log->debug('missing: '.$file);
         }
         if ($this->getCurrentDirectory() == $this->getDocumentRoot()) {
             return;
@@ -155,9 +150,9 @@ class Router
             $file = realpath($this->getCurrentDirectory().$rel).DIRECTORY_SEPARATOR.self::HTACCESS_FILE;
             if (is_file($file) && is_readable($file)) {
                 $this->htaccessFiles[$file] = true; // .htaccess from higher directories
-                $this->debug('LOADING: '.$file);
+                $this->log->debug('LOADING: '.$file);
             } else {
-                $this->debug('missing: '.$file);
+                $this->log->debug('missing: '.$file);
             }
         }
     }
@@ -181,31 +176,31 @@ class Router
     public function checkRequest()
     {
         $uri = '.'.$this->request->getScriptName();
-        $this->debug('uri: '.$uri);
+        $this->log->debug('uri: '.$uri);
 
         if (is_file($uri)) {
             $this->file = $uri;
-            //$this->debug('+ IS FILE');
+            //$this->log->debug('+ IS FILE');
         } else {
-            //$this->debug('- not file');
+            //$this->log->debug('- not file');
         }
         if (is_dir($uri)) {
-            //$this->debug('+ IS DIR');
+            //$this->log->debug('+ IS DIR');
             $this->directory = $uri;
             foreach ($this->indexi as $index) {
                 if (is_file($uri.DIRECTORY_SEPARATOR.$index)) {
                     $this->file = $uri.DIRECTORY_SEPARATOR.$index;
-                    //$this->debug('+ DIR HAS '.$index);
+                    //$this->log->debug('+ DIR HAS '.$index);
                     break;
                 } else {
-                    //$this->debug('- not has '.$index);
+                    //$this->log->debug('- not has '.$index);
                 }
             }
         } else {
-            //$this->debug('- not dir');
+            //$this->log->debug('- not dir');
         }
-        $this->debug('file: '.($this->file ? $this->file : 'null'));
-        $this->debug('directory: '.($this->directory ? $this->directory : 'null'));
+        $this->log->debug('file: '.($this->file ? $this->file : 'null'));
+        $this->log->debug('directory: '.($this->directory ? $this->directory : 'null'));
     }
 
     /**
@@ -216,7 +211,7 @@ class Router
     {
         foreach ($this->htaccessFiles as $file => $contents) {
             if (!is_object($contents)) {
-                $this->debug('applyHtaccess: ERROR: '.$file);
+                $this->log->debug('applyHtaccess: ERROR: '.$file);
                 continue;
             }
             // build a list of directives that may be applied
@@ -226,17 +221,17 @@ class Router
                 }
             }
         }
-        //$this->debug('apply directives: '.print_r($this->apply, true));
+        //$this->log->debug('apply directives: '.print_r($this->apply, true));
         $namespace = 'Attogram\\Htfaker\\';
         foreach (array_keys($this->apply) as $directive) {
             $className = $namespace.$directive;
             if (class_exists($className)) {
-                //$this->debug('CLASS EXISTS: '.$className);
+                //$this->log->debug('CLASS EXISTS: '.$className);
                 $class = new $className();
                 $result = $class->apply($this, $this->apply[$directive]);
-                $this->debug($directive.' result: '.print_r($result, true));
+                $this->log->debug($directive.' result: '.print_r($result, true));
             } else {
-                $this->debug('applyHtaccess: ERROR: directive class not found: '.$className);
+                $this->log->debug('applyHtaccess: ERROR: directive class not found: '.$className);
             }
         }
     }
@@ -255,18 +250,5 @@ class Router
         $this->parser->ignoreWhiteLines(true);
         $this->parser->ignoreComments(true);
         return $this->parser;
-    }
-
-    /**
-     * debug message
-     * @param mixed $message (optional)
-     * @see Router::$debug
-     */
-    public function debug($message = '')
-    {
-        if (!$this->debug) {
-            return;
-        }
-        $this->log->debug($message);
     }
 }
