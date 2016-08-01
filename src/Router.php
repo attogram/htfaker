@@ -56,40 +56,18 @@ class Router
      */
     public function run()
     {
-        //$this->log->debug('getUri: '.$this->request->getUri());
-        //$this->log->debug('getRequestUri: '.$this->request->getRequestUri());
-        //$this->log->debug('getBaseUrl: '.$this->request->getBaseUrl());
-        //$this->log->debug('getBasePath: '.$this->request->getBasePath());
-        //$this->log->debug('getPathInfo: '.$this->request->getPathInfo());
-        $this->log->debug('getScriptName: '.$this->request->getScriptName());
-        //$this->log->debug('__DIR__: '.__DIR__);
-        //$this->log->debug('__FILE__: '.__FILE__);
-        //$this->log->debug('cwd: '.getcwd());
-        //$this->log->debug('server: '.print_r($this->request->server, true));
-        //$this->log->debug('SCRIPT_NAME='.$this->request->server->get('SCRIPT_NAME'));
-        $this->log->debug('PHP_SELF: '.$this->request->server->get('PHP_SELF'));
-
-        $this->log->notice('documentRoot: '.$this->getDocumentRoot());
-        $this->log->notice('currentDirectory: '.$this->getCurrentDirectory());
+        $this->log->info('documentRoot: '.$this->getDocumentRoot());
+        $this->log->info('currentDirectory: '.$this->getCurrentDirectory());
         $this->setHtaccessFiles(); // get all possible .htaccess files for this request
         if (!$this->htaccessFiles) { // No .htaccess files found
-            $this->log->notice('No '.self::HTACCESS_FILE.' files found. return false');
+            $this->log->info('No '.self::HTACCESS_FILE.' files found. return false');
             return false; // send request back to server
         }
         $this->parseHtaccessFiles();
         $this->checkRequest();
         $this->applyHtaccess();
-        $this->log->notice('IN DEV. return false');
+        $this->log->info('IN DEV. return false');
         return false; // send request back to server
-    }
-
-    /**
-     * @see Router::$documentRoot
-     * @return void
-     */
-    public function setDocumentRoot()
-    {
-        $this->documentRoot = $this->request->server->get('DOCUMENT_ROOT');
     }
 
     /**
@@ -99,18 +77,9 @@ class Router
     public function getDocumentRoot()
     {
         if (!$this->documentRoot) {
-            $this->setDocumentRoot();
+            $this->documentRoot = realpath($this->request->server->get('DOCUMENT_ROOT'));
         }
         return $this->documentRoot;
-    }
-
-    /**
-     * @see Router::$currentDirectory
-     * @return void
-     */
-    public function setCurrentDirectory()
-    {
-        $this->currentDirectory = realpath(dirname('.'.$this->request->getScriptName()));
     }
 
     /**
@@ -120,7 +89,18 @@ class Router
     public function getCurrentDirectory()
     {
         if (!$this->currentDirectory) {
-            $this->setCurrentDirectory();
+            //$this->log->debug('getUri: '.$this->request->getUri());
+            $this->log->debug('setCurrentDirectory getRequestUri: '.$this->request->getRequestUri());
+            //$this->log->debug('getBaseUrl: '.$this->request->getBaseUrl());
+            $this->log->debug('setCurrentDirectory getPathInfo: '.$this->request->getPathInfo());
+            $this->log->debug('setCurrentDirectory getScriptName: '.$this->request->getScriptName());
+            //$this->log->debug('__DIR__: '.__DIR__);
+            //$this->log->debug('__FILE__: '.__FILE__);
+            //$this->log->debug('cwd: '.getcwd());
+            //$this->log->debug('server: '.print_r($this->request->server, true));
+            //$this->log->debug('SCRIPT_NAME='.$this->request->server->get('SCRIPT_NAME'));
+            $this->log->debug('setCurrentDirectory PHP_SELF: '.$this->request->server->get('PHP_SELF'));
+            $this->currentDirectory = realpath(dirname('.'.$this->request->getScriptName()));
         }
         return $this->currentDirectory;
     }
@@ -135,7 +115,7 @@ class Router
         $file = $this->getCurrentDirectory().DIRECTORY_SEPARATOR.self::HTACCESS_FILE;
         if (is_file($file) && is_readable($file)) {
             $this->htaccessFiles[$file] = true; // .htaccess from current directory
-            $this->log->notice('LOADING: '.$file);
+            $this->log->info('LOADING: '.$file);
         } else {
             $this->log->debug('missing: '.$file);
         }
@@ -150,7 +130,7 @@ class Router
             $file = realpath($this->getCurrentDirectory().$rel).DIRECTORY_SEPARATOR.self::HTACCESS_FILE;
             if (is_file($file) && is_readable($file)) {
                 $this->htaccessFiles[$file] = true; // .htaccess from higher directories
-                $this->log->notice('LOADING: '.$file);
+                $this->log->info('LOADING: '.$file);
             } else {
                 $this->log->debug('missing: '.$file);
             }
@@ -171,7 +151,8 @@ class Router
     }
 
     /**
-     *
+     * @see Router::file
+     * @see Router::directory
      */
     public function checkRequest()
     {
@@ -199,8 +180,8 @@ class Router
         } else {
             //$this->log->debug('- not dir');
         }
-        $this->log->notice('file: '.($this->file ? $this->file : 'null'));
-        $this->log->notice('directory: '.($this->directory ? $this->directory : 'null'));
+        $this->log->info('file: '.($this->file ? $this->file : 'null'));
+        $this->log->info('directory: '.($this->directory ? $this->directory : 'null'));
     }
 
     /**
@@ -217,7 +198,9 @@ class Router
             // build a list of directives that may be applied
             foreach ($this->directives as $directive) {
                 if ($result = $contents->search($directive)) {
-                    $this->apply[$directive][] = (string)$result;
+                    //$this->apply[$directive][] = (string)$result;
+                    $this->apply[$directive][] = $result;
+
                 }
             }
         }

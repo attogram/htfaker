@@ -15,11 +15,14 @@ functionality for the
 
 ## Install
 
-``composer require attogram/htfaker``
+Example install:
+```
+composer require attogram/htfaker
+```
 
 ## Usage
 
-Example test usage:
+Example usage:
 
 ```
 cd vendor/attogram/htfaker
@@ -34,9 +37,30 @@ htfaker is in the planning stage. There is currently very little functionality.
 
 If you're interested in making a working library, please fork and contribute!
 
+htfaker framework                    | *status*<a id="htfaker">
+------------------------------------ | ------------------------
+get document root directory          | **Testing**
+get current directory                | *in dev*
+check if request is for a file       | *in dev*
+check if request is for a directory  | *in dev*
+get .htaccess files, current to root | **Testing**
+parse all found .htaccess files      | **Testing**
+get all directives to apply          | *in dev*
+apply directives                     | *in dev*
+shutdown                             | -
+
+*standards* | *status*
+----------- | --------
+[PSR-1 Basic Coding Standard](http://www.php-fig.org/psr/psr-1/) | **Testing**
+[PSR-2 Coding Style Guide](http://www.php-fig.org/psr/psr-2/) | **Testing**
+[PSR-3 Logger Interface](http://www.php-fig.org/psr/psr-3/) | **Testing**
+[PSR-4 Autoloading](http://www.php-fig.org/psr/psr-4/) | **Testing**
+[PSR-5 PHPDoc](https://github.com/phpDocumentor/fig-standards/blob/master/proposed/phpdoc.md) | *in dev*
+[PSR-7 HTTP message interfaces](http://www.php-fig.org/psr/psr-7/) | -
+
 [core](http://httpd.apache.org/docs/trunk/mod/core.html#allowoverride) | *status*<a id="core"></a>
 -------------------- | --------------------
-[ErrorDocument](http://httpd.apache.org/docs/trunk/mod/core.html#errordocument) | [5%](https://github.com/attogram/htfaker/blob/master/src/ErrorDocument.php)
+[ErrorDocument](http://httpd.apache.org/docs/trunk/mod/core.html#errordocument) | [*in dev*](https://github.com/attogram/htfaker/blob/master/src/ErrorDocument.php)
 ErrorDocument 400 (Bad Request) | -
 ErrorDocument 401 (Unauthorized) | -
 ErrorDocument 402 (Payment Required) | -
@@ -44,7 +68,7 @@ ErrorDocument 403 (Forbidden) | -
 ErrorDocument 404 (Not Found) | -
 ErrorDocument 500 (Internal Server Error) | -
 [ForceType](http://httpd.apache.org/docs/trunk/mod/core.html#forcetype) | -
-[Options](http://httpd.apache.org/docs/trunk/mod/core.html#options) | [5%](https://github.com/attogram/htfaker/blob/master/src/Options.php)
+[Options](http://httpd.apache.org/docs/trunk/mod/core.html#options) | [*in dev*](https://github.com/attogram/htfaker/blob/master/src/Options.php)
 Options -Indexes | -
 Options +Indexes | -
 
@@ -65,13 +89,13 @@ Options +Indexes | -
 [mod_dir](http://httpd.apache.org/docs/trunk/mod/mod_dir.html) | *status*
 -------------------- | --------------------
 [DirectoryCheckHandler](https://httpd.apache.org/docs/trunk/mod/mod_dir.html#directorycheckhandler) | -
-[DirectoryIndex](https://httpd.apache.org/docs/trunk/mod/mod_dir.html#directoryindex) | [5%](https://github.com/attogram/htfaker/blob/master/src/DirectoryIndex.php)
+[DirectoryIndex](https://httpd.apache.org/docs/trunk/mod/mod_dir.html#directoryindex) | [*in dev*](https://github.com/attogram/htfaker/blob/master/src/DirectoryIndex.php)
 DirectoryIndex _local-url_ | -
 DirectoryIndex _local-url [local-url]..._ | -
 DirectoryIndex disabled | -
 [DirectoryIndexRedirect](https://httpd.apache.org/docs/trunk/mod/mod_dir.html#directoryindexredirect) | -
 [DirectorySlash](https://httpd.apache.org/docs/trunk/mod/mod_dir.html#directoryslash) | -
-[FallbackResource](https://httpd.apache.org/docs/trunk/mod/mod_dir.html#fallbackresource) | [5%](https://github.com/attogram/htfaker/blob/master/src/FallbackResource.php)
+[FallbackResource](https://httpd.apache.org/docs/trunk/mod/mod_dir.html#fallbackresource) | [*in dev*](https://github.com/attogram/htfaker/blob/master/src/FallbackResource.php)
 FallbackResource _local-url_ | -
 FallbackResource disabled | -
 
@@ -96,15 +120,6 @@ FallbackResource disabled | -
 [mod_authz_groupfile](http://httpd.apache.org/docs/trunk/mod/mod_authz_groupfile.html) | *status*
 -------------------- | --------------------
 [AuthGroupFile](http://httpd.apache.org/docs/trunk/mod/mod_authz_groupfile.html#authgroupfile) | -
-
-*standards* | *status*
------------ | --------
-[PSR-1 Basic Coding Standard](http://www.php-fig.org/psr/psr-1/) | 75%
-[PSR-2 Coding Style Guide](http://www.php-fig.org/psr/psr-2/) | 75%
-[PSR-3 Logger Interface](http://www.php-fig.org/psr/psr-3/) | -
-[PSR-4 Autoloading](http://www.php-fig.org/psr/psr-4/) | 75%
-[PSR-5 PHPDoc](https://github.com/phpDocumentor/fig-standards/blob/master/proposed/phpdoc.md) | 50%
-[PSR-7 HTTP message interfaces](http://www.php-fig.org/psr/psr-7/) | -
 
 ## License
 
