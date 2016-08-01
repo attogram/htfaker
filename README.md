@@ -58,7 +58,7 @@ shutdown                             | -
 [PSR-5 PHPDoc](https://github.com/phpDocumentor/fig-standards/blob/master/proposed/phpdoc.md) | *in dev*
 [PSR-7 HTTP message interfaces](http://www.php-fig.org/psr/psr-7/) | -
 
-[core](http://httpd.apache.org/docs/trunk/mod/core.html#allowoverride) | *status*<a id="core"></a>
+[core](http://httpd.apache.org/docs/trunk/mod/core.html#allowoverride) directives | *status*<a id="core"></a>
 -------------------- | --------------------
 [ErrorDocument](http://httpd.apache.org/docs/trunk/mod/core.html#errordocument) | [*in dev*](https://github.com/attogram/htfaker/blob/master/src/ErrorDocument.php)
 ErrorDocument 400 (Bad Request) | -
@@ -72,21 +72,41 @@ ErrorDocument 500 (Internal Server Error) | -
 Options -Indexes | -
 Options +Indexes | -
 
-[mod_access_compat](http://httpd.apache.org/docs/trunk/mod/mod_access_compat.html) | *status*
+[mod_access_compat](http://httpd.apache.org/docs/trunk/mod/mod_access_compat.html) directives | *status*
 -------------------- | --------------------
 [Allow](http://httpd.apache.org/docs/trunk/mod/mod_access_compat.html#allow) | -
+Allow from all | -
+Allow from *host* | -
+Allow from *host [host] ...* | -
+Allow from *ip* | -
+Allow from *ip [ip] ...* | -
+Allow from *network/netmask* | -
+Allow from *network/nnn-CIDR* | -
+Allow from *env=* | -
 [Deny](http://httpd.apache.org/docs/trunk/mod/mod_access_compat.html#deny) | -
+Deny from all | -
+Deny from *host* | -
+Deny from *host [host] ...* | -
+Deny from *ip* | -
+Deny from *ip [ip] ...* | -
+Deny from *network/netmask* | -
+Deny from *network/CIDR* | -
+Deny from *env=* | -
 [Order](http://httpd.apache.org/docs/trunk/mod/mod_access_compat.html#order) | -
+Order Allow,Deny | -
+Order Deny,Allow | -
 [Satisfy](http://httpd.apache.org/docs/trunk/mod/mod_access_compat.html#satisfy) | -
+Satisfy All | -
+Satisfy Any | -
 
-[mod_alias](http://httpd.apache.org/docs/trunk/mod/mod_alias.html) | *status*
+[mod_alias](http://httpd.apache.org/docs/trunk/mod/mod_alias.html) directives | *status*
 -------------------- | --------------------
 [Redirect](http://httpd.apache.org/docs/trunk/mod/mod_alias.html#redirect) | -
 [RedirectPermanent](http://httpd.apache.org/docs/trunk/mod/mod_alias.html#redirectpermanent) | -
 [RedirectTemp](http://httpd.apache.org/docs/trunk/mod/mod_alias.html#redirecttemp) | -
 [RedirectMatch](http://httpd.apache.org/docs/trunk/mod/mod_alias.html#redirectmatch) | -
 
-[mod_dir](http://httpd.apache.org/docs/trunk/mod/mod_dir.html) | *status*
+[mod_dir](http://httpd.apache.org/docs/trunk/mod/mod_dir.html) directives | *status*
 -------------------- | --------------------
 [DirectoryCheckHandler](https://httpd.apache.org/docs/trunk/mod/mod_dir.html#directorycheckhandler) | -
 [DirectoryIndex](https://httpd.apache.org/docs/trunk/mod/mod_dir.html#directoryindex) | [*in dev*](https://github.com/attogram/htfaker/blob/master/src/DirectoryIndex.php)
@@ -99,7 +119,7 @@ DirectoryIndex disabled | -
 FallbackResource _local-url_ | -
 FallbackResource disabled | -
 
-[mod_rewrite](http://httpd.apache.org/docs/trunk/mod/mod_rewrite.html) | *status*
+[mod_rewrite](http://httpd.apache.org/docs/trunk/mod/mod_rewrite.html) directives | *status*
 -------------------- | --------------------
 [RewriteEngine](http://httpd.apache.org/docs/trunk/mod/mod_rewrite.html#rewriteengine) | -
 [RewriteOptions](http://httpd.apache.org/docs/trunk/mod/mod_rewrite.html#rewriteoptions) | -
@@ -107,17 +127,17 @@ FallbackResource disabled | -
 [RewriteCond](http://httpd.apache.org/docs/trunk/mod/mod_rewrite.html#rewritecond) | -
 [RewriteRule](http://httpd.apache.org/docs/trunk/mod/mod_rewrite.html#rewriterule) | -
 
-[mod_authn_core](http://httpd.apache.org/docs/trunk/mod/mod_authn_core.html) | *status*
+[mod_authn_core](http://httpd.apache.org/docs/trunk/mod/mod_authn_core.html) directives | *status*
 -------------------- | --------------------
 [Require](http://httpd.apache.org/docs/trunk/mod/mod_authz_core.html#require) | -
 [AuthType](http://httpd.apache.org/docs/trunk/mod/mod_authn_core.html#authtype) | -
 [AuthName](http://httpd.apache.org/docs/trunk/mod/mod_authn_core.html#authname) | -
 
-[mod_authn_file](http://httpd.apache.org/docs/trunk/mod/mod_authn_file.html) | *status*
+[mod_authn_file](http://httpd.apache.org/docs/trunk/mod/mod_authn_file.html) directives | *status*
 -------------------- | --------------------
 [AuthUserFile](http://httpd.apache.org/docs/trunk/mod/mod_authn_file.html#authuserfile) | -
 
-[mod_authz_groupfile](http://httpd.apache.org/docs/trunk/mod/mod_authz_groupfile.html) | *status*
+[mod_authz_groupfile](http://httpd.apache.org/docs/trunk/mod/mod_authz_groupfile.html) directives | *status*
 -------------------- | --------------------
 [AuthGroupFile](http://httpd.apache.org/docs/trunk/mod/mod_authz_groupfile.html#authgroupfile) | -
 
