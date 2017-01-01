@@ -10,7 +10,7 @@ htfaker is dual licensed under
 
 ## htfaker - MIT License
 
-Copyright (c) 2016 htfaker Developers <https://github.com/attogram/htfaker>
+Copyright (c) 2017 htfaker Developers <https://github.com/attogram/htfaker>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ THE SOFTWARE.
 
 ## htfaker - GNU General Public License
 
-Copyright (C) 2016 htfaker Developers <https://github.com/attogram/htfaker>
+Copyright (C) 2017 htfaker Developers <https://github.com/attogram/htfaker>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
