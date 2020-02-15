@@ -7,7 +7,7 @@
   "require": {
     "php": ">=5.4.0 || ^7.0",
     "tivie/htaccess-parser": "dev-master",
-    "symfony/http-foundation": "~3.1.2",
+    "symfony/http-foundation": ">=3.4.35",
     "monolog/monolog": "~1.20"
   },
   "autoload": {
