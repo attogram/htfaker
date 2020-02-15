@@ -6,7 +6,7 @@ use Tivie\HtaccessParser\Parser;
 
 class Router
 {
-    const HTFAKER_VERSION = '0.0.2';
+    const HTFAKER_VERSION = '0.0.3';
     const HTACCESS_FILE = '.htaccess';
 
     /** @var Symfony\Component\HttpFoundation\Request The Request object */
