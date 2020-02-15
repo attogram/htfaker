@@ -114,12 +114,12 @@ class Router
      */
     private function setHtaccessFiles()
     {
-        $file = $this->getCurrentDirectory().DIRECTORY_SEPARATOR.self::HTACCESS_FILE;
+        $file = $this->getCurrentDirectory() . DIRECTORY_SEPARATOR . self::HTACCESS_FILE;
         if (is_file($file) && is_readable($file)) {
             $this->htaccessFiles[$file] = true; // .htaccess from current directory
-            $this->verbose('LOADING: ' . $file);
+            $this->verbose('setHtaccessFiles: LOADING: ' . $file);
         } else {
-            $this->verbose('missing: ' . $file);
+            $this->verbose('setHtaccessFiles: missing: ' . $file);
         }
         if ($this->getCurrentDirectory() == $this->getDocumentRoot()) {
             return;
@@ -132,9 +132,9 @@ class Router
             $file = realpath($this->getCurrentDirectory() . $rel) . DIRECTORY_SEPARATOR . self::HTACCESS_FILE;
             if (is_file($file) && is_readable($file)) {
                 $this->htaccessFiles[$file] = true; // .htaccess from higher directories
-                $this->verbose('LOADING: ' . $file);
+                $this->verbose('setHtaccessFiles: LOADING: ' . $file);
             } else {
-                $this->verbose('missing: ' . $file);
+                $this->verbose('setHtaccessFiles: missing: ' . $file);
             }
         }
     }
@@ -169,8 +169,8 @@ class Router
             //$this->verbose('+ IS DIR');
             $this->directory = $uri;
             foreach ($this->indexi as $index) {
-                if (is_file($uri . DIRECTORY_SEPARATOR.$index)) {
-                    $this->file = $uri . DIRECTORY_SEPARATOR.$index;
+                if (is_file($uri . DIRECTORY_SEPARATOR . $index)) {
+                    $this->file = $uri . DIRECTORY_SEPARATOR . $index;
                     //$this->verbose('+ DIR HAS '.$index);
                     break;
                 }
@@ -201,7 +201,7 @@ class Router
         }
         $namespace = 'Attogram\\Htfaker\\';
         foreach (array_keys($this->apply) as $directive) {
-            $className = $namespace.$directive;
+            $className = $namespace . $directive;
             if (class_exists($className)) {
                 $class = new $className();
                 $result = $class->apply($this, $this->apply[$directive]);
