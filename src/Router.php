@@ -6,67 +6,80 @@ use Tivie\HtaccessParser\Parser;
 
 class Router
 {
+    /** @var string */
     const HTFAKER_VERSION = '0.0.3';
+
+    /** @var string */
     const HTACCESS_FILE = '.htaccess';
 
+    /** @var bool verbose debug messages to STDOUT */
+    public $verbose = true;
+
     /** @var Symfony\Component\HttpFoundation\Request The Request object */
-    public $request;
+    private $request;
+
     /** @var string The Document Root of current request */
-    public $documentRoot;
+    private $documentRoot;
+
     /** @var string The Current Directory of current request */
-    public $currentDirectory;
+    private $currentDirectory;
+
     /** @var array List of all .htaccess files that can be applied to current request */
-    public $htaccessFiles = array();
+    private $htaccessFiles = [];
+
     /** @var Tivie\HtaccessParser\Parser .htacces parser */
-    public $parser;
+    private $parser;
+
     /** @var array List of .htaccess directives to be applied to current request */
-    public $apply = array();
+    private $apply = [];
+    
     /** @var array List of .htaccess directives that can be parsed */
-    public $directives = array(
+    private $directives = [
         'Options',
         'FallbackResource',
         'ErrorDocument',
-        'DirectoryIndex'
-    );
+        'DirectoryIndex',
+    ];
+
     /** @var array List of default index filenames */
-    public $indexi = array('index.php', 'index.html');
+    private $indexi = [
+        'index.php',
+        'index.html',
+    ];
+
     /** @var string The filename of the request */
-    public $file;
+    private $file;
+
     /** @var string The directory of the request */
-    public $directory;
+    private $directory;
 
     /**
      * start htfaker router
      * @param obj $request \Symfony\Component\HttpFoundation\Request object
      * @param obj $log \Psr\Log\LoggerInterface PSR-3 Logger
      */
-    public function __construct(
-        \Symfony\Component\HttpFoundation\Request $request,
-        \Psr\Log\LoggerInterface $log
-    ) {
+    public function __construct(\Symfony\Component\HttpFoundation\Request $request) {
         $this->request = $request;
-        $this->log = $log;
-        $this->log->debug('htfaker v'.self::HTFAKER_VERSION.' @ '.gmdate('Y-m-d h:i:s').' UTC');
+        $this->verbose('htfaker v' . self::HTFAKER_VERSION);
     }
 
     /**
      * run htfaker router
-     * @return bool  true: handle current request
-     *               false: pass control back to server
+     * @return bool  true: handle current request, false: pass control back to server
      */
     public function run()
     {
-        $this->log->info('documentRoot: '.$this->getDocumentRoot());
-        $this->log->info('currentDirectory: '.$this->getCurrentDirectory());
+        $this->verbose('documentRoot: ' . $this->getDocumentRoot());
+        $this->verbose('currentDirectory: ' . $this->getCurrentDirectory());
         $this->setHtaccessFiles(); // get all possible .htaccess files for this request
         if (!$this->htaccessFiles) { // No .htaccess files found
-            $this->log->info('No '.self::HTACCESS_FILE.' files found. return false');
+            $this->verbose('No ' . self::HTACCESS_FILE . ' files found. return false');
             return false; // send request back to server
         }
         $this->parseHtaccessFiles();
         $this->checkRequest();
         $this->applyHtaccess();
-        $this->log->info('IN DEV. return false');
+        $this->verbose('IN DEV. return false');
         return false; // send request back to server
     }
 
@@ -74,7 +87,7 @@ class Router
      * @see Router::$documentRoot
      * @return string The Document Root of current request
      */
-    public function getDocumentRoot()
+    private function getDocumentRoot()
     {
         if (!$this->documentRoot) {
             $this->documentRoot = realpath($this->request->server->get('DOCUMENT_ROOT'));
@@ -86,21 +99,10 @@ class Router
      * @see Router::$currentDirectory
      * @return string The Current Directory of current request
      */
-    public function getCurrentDirectory()
+    private function getCurrentDirectory()
     {
         if (!$this->currentDirectory) {
-            //$this->log->debug('getUri: '.$this->request->getUri());
-            $this->log->debug('setCurrentDirectory getRequestUri: '.$this->request->getRequestUri());
-            //$this->log->debug('getBaseUrl: '.$this->request->getBaseUrl());
-            $this->log->debug('setCurrentDirectory getPathInfo: '.$this->request->getPathInfo());
-            $this->log->debug('setCurrentDirectory getScriptName: '.$this->request->getScriptName());
-            //$this->log->debug('__DIR__: '.__DIR__);
-            //$this->log->debug('__FILE__: '.__FILE__);
-            //$this->log->debug('cwd: '.getcwd());
-            //$this->log->debug('server: '.print_r($this->request->server, true));
-            //$this->log->debug('SCRIPT_NAME='.$this->request->server->get('SCRIPT_NAME'));
-            $this->log->debug('setCurrentDirectory PHP_SELF: '.$this->request->server->get('PHP_SELF'));
-            $this->currentDirectory = realpath(dirname('.'.$this->request->getScriptName()));
+            $this->currentDirectory = realpath(dirname('.' . $this->request->getScriptName()));
         }
         return $this->currentDirectory;
     }
@@ -110,14 +112,14 @@ class Router
      * in format:  htaccessFiles[ path_and_filename ] = true
      * @see Router::$htaccessFiles
      */
-    public function setHtaccessFiles()
+    private function setHtaccessFiles()
     {
-        $file = $this->getCurrentDirectory().DIRECTORY_SEPARATOR.self::HTACCESS_FILE;
+        $file = $this->getCurrentDirectory() . DIRECTORY_SEPARATOR . self::HTACCESS_FILE;
         if (is_file($file) && is_readable($file)) {
             $this->htaccessFiles[$file] = true; // .htaccess from current directory
-            $this->log->info('LOADING: '.$file);
+            $this->verbose('setHtaccessFiles: LOADING: ' . $file);
         } else {
-            $this->log->debug('missing: '.$file);
+            $this->verbose('setHtaccessFiles: missing: ' . $file);
         }
         if ($this->getCurrentDirectory() == $this->getDocumentRoot()) {
             return;
@@ -126,13 +128,13 @@ class Router
         $levelsCount = sizeof(explode(DIRECTORY_SEPARATOR, $levels)) - 2;
         $rel = '..';
         for ($x = 0; $x <= $levelsCount; $x++ ) {
-            $rel .= DIRECTORY_SEPARATOR.'..';
-            $file = realpath($this->getCurrentDirectory().$rel).DIRECTORY_SEPARATOR.self::HTACCESS_FILE;
+            $rel .= DIRECTORY_SEPARATOR . '..';
+            $file = realpath($this->getCurrentDirectory() . $rel) . DIRECTORY_SEPARATOR . self::HTACCESS_FILE;
             if (is_file($file) && is_readable($file)) {
                 $this->htaccessFiles[$file] = true; // .htaccess from higher directories
-                $this->log->info('LOADING: '.$file);
+                $this->verbose('setHtaccessFiles: LOADING: ' . $file);
             } else {
-                $this->log->debug('missing: '.$file);
+                $this->verbose('setHtaccessFiles: missing: ' . $file);
             }
         }
     }
@@ -141,7 +143,7 @@ class Router
      * parse all files in the htaccessFiles list
      * @see Router::$htaccessFiles
      */
-    public function parseHtaccessFiles()
+    private function parseHtaccessFiles()
     {
         foreach (array_keys($this->htaccessFiles) as $file) {
             $this->htaccessFiles[$file] = $this->getParser()->parse(
@@ -154,67 +156,58 @@ class Router
      * @see Router::file
      * @see Router::directory
      */
-    public function checkRequest()
+    private function checkRequest()
     {
-        $uri = '.'.$this->request->getScriptName();
-        $this->log->debug('uri: '.$uri);
+        $uri = '.' . $this->request->getScriptName();
+        $this->verbose('uri: ' . $uri);
 
         if (is_file($uri)) {
             $this->file = $uri;
-            //$this->log->debug('+ IS FILE');
-        } else {
-            //$this->log->debug('- not file');
+            //$this->verbose('+ IS FILE');
         }
         if (is_dir($uri)) {
-            //$this->log->debug('+ IS DIR');
+            //$this->verbose('+ IS DIR');
             $this->directory = $uri;
             foreach ($this->indexi as $index) {
-                if (is_file($uri.DIRECTORY_SEPARATOR.$index)) {
-                    $this->file = $uri.DIRECTORY_SEPARATOR.$index;
-                    //$this->log->debug('+ DIR HAS '.$index);
+                if (is_file($uri . DIRECTORY_SEPARATOR . $index)) {
+                    $this->file = $uri . DIRECTORY_SEPARATOR . $index;
+                    //$this->verbose('+ DIR HAS '.$index);
                     break;
-                } else {
-                    //$this->log->debug('- not has '.$index);
                 }
             }
-        } else {
-            //$this->log->debug('- not dir');
         }
-        $this->log->info('file: '.($this->file ? $this->file : 'null'));
-        $this->log->info('directory: '.($this->directory ? $this->directory : 'null'));
+        $this->verbose('file: ' . ($this->file ? $this->file : 'null'));
+        $this->verbose('directory: ' . ($this->directory ? $this->directory : 'null'));
     }
 
     /**
      * Apply all the applicable htaccess rules for this request
      * @see Router::$htaccessFiles
      */
-    public function applyHtaccess()
+    private function applyHtaccess()
     {
         foreach ($this->htaccessFiles as $file => $contents) {
             if (!is_object($contents)) {
-                $this->log->error('applyHtaccess: ERROR: '.$file);
+                $this->error('applyHtaccess: ERROR: ' . $file);
                 continue;
             }
             // build a list of directives that may be applied
             foreach ($this->directives as $directive) {
                 if ($result = $contents->search($directive)) {
-                    //$this->apply[$directive][] = (string)$result;
                     $this->apply[$directive][] = $result;
 
                 }
             }
         }
-        //$this->log->debug('apply directives: '.print_r($this->apply, true));
         $namespace = 'Attogram\\Htfaker\\';
         foreach (array_keys($this->apply) as $directive) {
-            $className = $namespace.$directive;
+            $className = $namespace . $directive;
             if (class_exists($className)) {
-                //$this->log->debug('CLASS EXISTS: '.$className);
                 $class = new $className();
                 $result = $class->apply($this, $this->apply[$directive]);
-                $this->log->debug($directive.' result: '.print_r($result, true));
+                $this->verbose($directive . ' result: ' . print_r($result, true));
             } else {
-                $this->log->error('applyHtaccess: ERROR: directive class not found: '.$className);
+                $this->error('applyHtaccess: ERROR: directive class not found: ' . $className);
             }
         }
     }
@@ -224,7 +217,7 @@ class Router
      * @see Router::$parser
      * @return object
      */
-    public function getParser()
+    private function getParser()
     {
         if (is_object($this->parser)) {
             return $this->parser;
@@ -232,6 +225,25 @@ class Router
         $this->parser = new Parser();
         $this->parser->ignoreWhiteLines(true);
         $this->parser->ignoreComments(true);
+
         return $this->parser;
+    }
+
+    /**
+     * @param mixed $message
+     */
+    private function verbose($message = '')
+    {
+        if ($this->verbose) {
+            print 'DEBUG: ' . htmlentities(print_r($message, true)) . "<br />\n";
+        }
+    }
+
+    /**
+     * @param mixed $message
+     */
+    private function error($message = '')
+    {
+        print 'ERROR: ' . htmlentities(print_r($message, true)) . "<br />\n";
     }
 }

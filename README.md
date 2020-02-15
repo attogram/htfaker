@@ -33,7 +33,7 @@ then open [http://localhost:8080/](http://localhost:8080/) in your web browser.
 
 ## Status
 
-htfaker is in the planning stage. There is currently very little functionality.
+htfaker is in the startup stage.
 
 If you're interested in making a working library, please fork and contribute!
 
@@ -48,15 +48,6 @@ parse all found .htaccess files      | **Testing**
 get all directives to apply          | *in dev*
 apply directives                     | *in dev*
 shutdown                             | -
-
-*standards* | *status*
------------ | --------
-[PSR-1 Basic Coding Standard](http://www.php-fig.org/psr/psr-1/) | **Testing**
-[PSR-2 Coding Style Guide](http://www.php-fig.org/psr/psr-2/) | **Testing**
-[PSR-3 Logger Interface](http://www.php-fig.org/psr/psr-3/) | **Testing**
-[PSR-4 Autoloading](http://www.php-fig.org/psr/psr-4/) | **Testing**
-[PSR-5 PHPDoc](https://github.com/phpDocumentor/fig-standards/blob/master/proposed/phpdoc.md) | *in dev*
-[PSR-7 HTTP message interfaces](http://www.php-fig.org/psr/psr-7/) | -
 
 [core](http://httpd.apache.org/docs/trunk/mod/core.html#allowoverride) directives | *status*<a id="core"></a>
 -------------------- | --------------------
